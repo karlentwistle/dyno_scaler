@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PipelinesController < ApplicationController
   def index
     @pipelines = Pipeline.all
@@ -15,7 +17,7 @@ class PipelinesController < ApplicationController
     @pipeline = Pipeline.new(pipeline_params)
 
     if @pipeline.save
-      redirect_to pipeline_url(@pipeline), notice: "Pipeline was successfully created."
+      redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +27,7 @@ class PipelinesController < ApplicationController
     @pipeline = Pipeline.find(params[:id])
     @pipeline.destroy
 
-    redirect_to pipelines_url, notice: "Pipeline was successfully destroyed."
+    redirect_to pipelines_url, notice: 'Pipeline was successfully destroyed.'
   end
 
   private

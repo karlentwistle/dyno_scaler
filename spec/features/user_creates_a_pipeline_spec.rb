@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User creates a pipeline' do
-  scenario 'they see a successful flash banner' do
+describe 'User creates a pipeline' do
+  it 'they see a successful flash banner' do
     visit new_pipeline_path
 
     fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'

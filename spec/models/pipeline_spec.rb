@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Pipeline, type: :model do
-  context 'validations' do
+RSpec.describe Pipeline do
+  describe 'validations' do
     it 'has a fail factory' do
       expect(build(:pipeline)).to be_valid
     end

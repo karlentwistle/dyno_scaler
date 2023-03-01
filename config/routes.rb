@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  resources :pipelines, only: [:new, :create, :index, :show, :destroy]
+  resources :pipelines, only: %i[new create index show destroy]
 end
