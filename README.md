@@ -5,9 +5,6 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
 
 # TODO
 
-- Setup a new pipeline to monitor
-  - Pipeline uuid
-  - Heroku api key
 - Add a process which automatically adds logdrain to each app in pipeline pointing towards self
   - [`POST /apps/{app_id_or_name}/log-drains`](https://devcenter.heroku.com/articles/platform-api-reference#log-drain-create)
 - Configure a simple logs endpoint to start receiving logs from pipelines dynos
