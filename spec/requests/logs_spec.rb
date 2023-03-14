@@ -11,9 +11,19 @@ RSpec.describe 'Logs' do
     end
 
     it 'returns http created' do
-      post_with_basic_auth(logs_path, username: 'username', password: 'password')
+      dyno = create(:dyno)
+
+      post_with_basic_auth(logs_path, username: 'username', password: dyno.log_token)
 
       expect(response).to have_http_status(:created)
+    end
+
+    it 'updates associated dynos last_active_at when a request is received' do
+      dyno = create(:dyno, last_active_at: nil)
+
+      post_with_basic_auth(logs_path, username: 'username', password: dyno.log_token)
+
+      expect(dyno.reload.last_active_at).to be_within(1.second).of(Time.zone.now)
     end
   end
 
