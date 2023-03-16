@@ -17,9 +17,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
   create_table "dynos", force: :cascade do |t|
     t.bigint "pipeline_id", null: false
     t.string "log_token", null: false
+    t.string "app_id", null: false
     t.datetime "last_active_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_dynos_on_app_id", unique: true
     t.index ["log_token"], name: "index_dynos_on_log_token", unique: true
     t.index ["pipeline_id"], name: "index_dynos_on_pipeline_id"
   end

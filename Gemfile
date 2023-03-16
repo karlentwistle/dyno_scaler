@@ -47,6 +47,9 @@ gem 'bootsnap', require: false
 # Simple, efficient background processing for Ruby.
 gem 'sidekiq'
 
+# Ruby HTTP client for the Heroku API.
+gem 'platform-api'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -56,6 +59,8 @@ gem 'sidekiq'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
+
+  gem 'byebug'
 end
 
 group :development do
@@ -79,6 +84,7 @@ group :test do
   gem 'faker'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'webmock'
 end
 
 group :development, :test do
