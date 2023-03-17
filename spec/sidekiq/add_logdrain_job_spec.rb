@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AddLogdrainToPipelineDynosJob, type: :job do
+RSpec.describe AddLogdrainJob, type: :job do
   it 'ignores pipelines which doesnt exist' do
     subject = described_class.new
 

@@ -2,7 +2,7 @@
 
 require 'platform-api'
 
-class AddLogdrainToPipelineDynosJob
+class AddLogdrainJob
   include Sidekiq::Job
 
   def perform(pipeline_id)
