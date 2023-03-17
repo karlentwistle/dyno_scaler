@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+class BatchAddLogdrainJob
+  include Sidekiq::Job
+
+  def perform
+    Pipeline.in_batches do |pipeline_batch|
+      AddLogdrainJob.perform_bulk(
+        pipeline_batch.pluck(:id).map { |x| [x] }
+      )
+    end
+  end
+end
