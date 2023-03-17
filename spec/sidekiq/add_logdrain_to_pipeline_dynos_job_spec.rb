@@ -13,12 +13,14 @@ RSpec.describe AddLogdrainToPipelineDynosJob, type: :job do
     stub_pipeline_response
     stub_empty_log_drains_list('b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
     stub_empty_log_drains_list('a11a232d-5606-4eeb-956f-bbbf63977380')
-    log_drain_create = stub_log_drain_create
+    log_drain_create_a = stub_log_drain_create('b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
+    log_drain_create_b = stub_log_drain_create('a11a232d-5606-4eeb-956f-bbbf63977380')
     pipeline = create(:pipeline, uuid: 'pipeline_uuid', api_key: 'pipeline_api_key')
 
     described_class.new.perform(pipeline.id)
 
-    expect(log_drain_create).to have_been_requested.times(2)
+    expect(log_drain_create_a).to have_been_requested.once
+    expect(log_drain_create_b).to have_been_requested.once
   end
 
   def stub_pipeline_response
@@ -45,8 +47,16 @@ RSpec.describe AddLogdrainToPipelineDynosJob, type: :job do
       )
   end
 
-  def stub_log_drain_create
-    stub_request(:post, %r{https://api.heroku.com/apps/%7B:url=%3E%22https://username:[a-zA-Z0-9]{24}@localhost:3000/logs%22%7D/log-drains})
+  def stub_log_drain_create(app_id)
+    hostname = Rails.configuration.x.log_drain.hostname
+
+    stub_request(:post, "https://api.heroku.com/apps/#{app_id}/log-drains")
+      .with(
+        body: %r{{"url":"https://username:[a-zA-Z0-9]{24}+@#{hostname}/logs"}},
+        headers: {
+          'Authorization' => 'Bearer pipeline_api_key'
+        }
+      )
       .to_return(status: 201)
   end
 end

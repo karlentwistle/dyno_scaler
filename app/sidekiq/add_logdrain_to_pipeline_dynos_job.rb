@@ -18,7 +18,7 @@ class AddLogdrainToPipelineDynosJob
       drains = log_drain.list(app_id)
       dyno = pipeline.dynos.find_or_create_by!(app_id:)
 
-      log_drain.create({ url: dyno.logs_url }) if drains.exclude?(dyno.logs_url)
+      log_drain.create(app_id, url: dyno.logs_url) if drains.none? { |d| d['url'] == dyno.logs_url }
     end
   end
 end
