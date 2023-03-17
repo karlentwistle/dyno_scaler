@@ -8,17 +8,18 @@ class AddLogdrainToPipelineDynosJob
   def perform(pipeline_id)
     return unless (pipeline = Pipeline.find_by(id: pipeline_id))
 
-    client = PlatformAPI.connect_oauth(pipeline.api_key)
+    heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)
+    heroku_review_app = PlatformAPI::ReviewApp.new(heroku_client)
+    heroku_log_drain = PlatformAPI::LogDrain.new(heroku_client)
 
-    review_apps = PlatformAPI::ReviewApp.new(client).list(pipeline.uuid)
+    review_apps = heroku_review_app.list(pipeline.uuid)
 
     review_apps.each do |review_app|
       app_id = review_app.fetch('app').fetch('id')
-      log_drain = PlatformAPI::LogDrain.new(client)
-      drains = log_drain.list(app_id)
-      dyno = pipeline.dynos.find_or_create_by!(app_id:)
+      drain_urls = heroku_log_drain.list(app_id).pluck('url')
 
-      log_drain.create(app_id, url: dyno.logs_url) if drains.none? { |d| d['url'] == dyno.logs_url }
+      dyno = pipeline.dynos.find_or_create_by!(app_id:)
+      heroku_log_drain.create(app_id, url: dyno.logs_url) if drain_urls.exclude?(dyno.logs_url)
     end
   end
 end
