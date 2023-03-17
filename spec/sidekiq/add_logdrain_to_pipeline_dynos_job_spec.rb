@@ -10,17 +10,32 @@ RSpec.describe AddLogdrainToPipelineDynosJob, type: :job do
   end
 
   it 'attaches drain to pipelines dynos' do
+    pipeline = create(:pipeline, uuid: 'pipeline_uuid', api_key: 'pipeline_api_key')
+
     stub_pipeline_response
     stub_empty_log_drains_list('b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
     stub_empty_log_drains_list('a11a232d-5606-4eeb-956f-bbbf63977380')
     log_drain_create_a = stub_log_drain_create('b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
     log_drain_create_b = stub_log_drain_create('a11a232d-5606-4eeb-956f-bbbf63977380')
-    pipeline = create(:pipeline, uuid: 'pipeline_uuid', api_key: 'pipeline_api_key')
 
     described_class.new.perform(pipeline.id)
 
     expect(log_drain_create_a).to have_been_requested.once
     expect(log_drain_create_b).to have_been_requested.once
+  end
+
+  it 'doesnt attach drain to a dyno thats already attached' do
+    pipeline = create(:pipeline, uuid: 'pipeline_uuid', api_key: 'pipeline_api_key')
+    dyno_a = create(:dyno, pipeline:, app_id: 'b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
+    dyno_b = create(:dyno, pipeline:, app_id: 'a11a232d-5606-4eeb-956f-bbbf63977380')
+
+    stub_pipeline_response
+    stub_log_drains_list('b756ff11-cca0-4079-a26f-ddc4c58ffd2b', dyno_a.logs_url)
+    stub_log_drains_list('a11a232d-5606-4eeb-956f-bbbf63977380', dyno_b.logs_url)
+
+    described_class.new.perform(pipeline.id)
+
+    expect(a_request(:post, 'https://api.heroku.com/apps/[^/]+/log-drains')).not_to have_been_made
   end
 
   def stub_pipeline_response
@@ -43,6 +58,27 @@ RSpec.describe AddLogdrainToPipelineDynosJob, type: :job do
       .to_return(
         status: 200,
         body: [].to_json,
+        headers: { 'Content-Type' => 'application/json;charset=utf-8' }
+      )
+  end
+
+  def stub_log_drains_list(app_id, url)
+    stub_request(:get, "https://api.heroku.com/apps/#{app_id}/log-drains")
+      .with(
+        headers: { 'Authorization' => 'Bearer pipeline_api_key' }
+      )
+      .to_return(
+        status: 200,
+        body: [
+          {
+            'addon' => nil,
+            'created_at' => '2023-03-17T21:53:07Z',
+            'id' => '24e90825-ad31-4bb1-b938-e52bead6084a',
+            'token' => 'd.bd0d138c-3136-4494-83b1-df0c1a5b0fea',
+            'updated_at' => '2023-03-17T21:53:08Z',
+            'url' => url
+          }
+        ].to_json,
         headers: { 'Content-Type' => 'application/json;charset=utf-8' }
       )
   end
