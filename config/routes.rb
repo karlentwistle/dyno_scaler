@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :logs, only: %i[create]
   resources :pipelines, only: %i[new create index show destroy]
 
-  root 'pipelines#index'
+  draw(:admin)
 
-  require 'sidekiq/web'
-  require 'sidekiq/cron/web'
-  mount Sidekiq::Web => 'sidekiq'
+  root 'pipelines#index'
 end
