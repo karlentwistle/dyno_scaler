@@ -1,0 +1,4 @@
+batch_add_logdrain:
+  cron: "*/10 * * * *"
+  class: "BatchAddLogdrainJob"
+  queue: within_one_minute

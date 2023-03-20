@@ -47,6 +47,9 @@ gem 'bootsnap', require: false
 # Simple, efficient background processing for Ruby.
 gem 'sidekiq'
 
+# A scheduling add-on for Sidekiq
+gem 'sidekiq-cron'
+
 # Ruby HTTP client for the Heroku API.
 gem 'platform-api'
 

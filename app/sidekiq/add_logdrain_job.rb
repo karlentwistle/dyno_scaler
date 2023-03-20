@@ -5,6 +5,8 @@ require 'platform-api'
 class AddLogdrainJob
   include Sidekiq::Job
 
+  sidekiq_options queue: 'within_one_minute'
+
   def perform(pipeline_id)
     return unless (pipeline = Pipeline.find_by(id: pipeline_id))
 
