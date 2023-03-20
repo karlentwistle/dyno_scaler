@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_20_210213) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,10 +27,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_210213) do
   end
 
   create_table "pipelines", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "uuid", null: false
     t.string "api_key", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pipelines_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,4 +48,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_210213) do
   end
 
   add_foreign_key "dynos", "pipelines"
+  add_foreign_key "pipelines", "users"
 end

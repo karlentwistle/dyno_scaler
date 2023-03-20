@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 class PipelinesController < ApplicationController
+  before_action :require_login
+
   def index
-    @pipelines = Pipeline.all
+    @pipelines = current_user.pipelines.all
   end
 
   def show
-    @pipeline = Pipeline.find(params[:id])
+    @pipeline = current_user.pipelines.find(params[:id])
   end
 
   def new
-    @pipeline = Pipeline.new
+    @pipeline = current_user.pipelines.new
   end
 
   def create
-    @pipeline = Pipeline.new(pipeline_params)
+    @pipeline = current_user.pipelines.new(pipeline_params)
 
     if @pipeline.save
       redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully created.'
@@ -24,7 +26,7 @@ class PipelinesController < ApplicationController
   end
 
   def destroy
-    @pipeline = Pipeline.find(params[:id])
+    @pipeline = current_user.pipeline.find(params[:id])
     @pipeline.destroy
 
     redirect_to pipelines_url, notice: 'Pipeline was successfully destroyed.'

@@ -5,4 +5,5 @@ class Pipeline < ApplicationRecord
   validates :api_key, presence: true
 
   has_many :dynos, dependent: :destroy
+  belongs_to :user
 end
