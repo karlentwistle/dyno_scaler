@@ -25,5 +25,5 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
-rubocop:disable Metrics/MethodLength:
+Metrics/MethodLength:
   Enabled: false
