@@ -29,6 +29,6 @@ module Dynoscaler
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.x.log_drain.hostname = 'localhost:3000'
+    config.x.log_drain.hostname = ENV.fetch('LOG_DRAIN_HOSTNAME')
   end
 end
