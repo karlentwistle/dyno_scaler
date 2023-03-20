@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'support/features/clearance_helpers'
 
 RSpec.describe 'Visitor resets password' do
   before { ActionMailer::Base.deliveries.clear }
