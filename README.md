@@ -15,3 +15,4 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
   - [`PATCH /apps/{app_id_or_name}/formation`](https://devcenter.heroku.com/articles/platform-api-reference#formation-batch-update)
 - When active app stops receiving HTTP requests restore to BASE
   - [`PATCH /apps/{app_id_or_name}/formation`](https://devcenter.heroku.com/articles/platform-api-reference#formation-batch-update)
+- Store Pipeline#api_key with [active_record_encryption](https://guides.rubyonrails.org/active_record_encryption.html)
