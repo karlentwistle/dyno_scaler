@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe 'User creates a pipeline' do
   it 'they see a successful flash banner' do
+    sign_in_as create(:user)
     visit new_pipeline_path
 
     fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'
