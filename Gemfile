@@ -56,6 +56,9 @@ gem 'sidekiq-cron'
 # Ruby HTTP client for the Heroku API.
 gem 'platform-api'
 
+# Tailwind CSS for Rails
+gem 'tailwindcss-rails', '~> 2.0'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
