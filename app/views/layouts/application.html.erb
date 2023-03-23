@@ -13,12 +13,7 @@
 
   <body class="bg-gray-900">
     <%= render partial: "layouts/navbar" %>
-
-    <div id="flash">
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %>"><%= value %></div>
-      <% end %>
-    </div>
+    <%= render partial: "layouts/flash" %>
 
     <% if signed_in? %>
       Signed in as: <%= current_user.email %>
