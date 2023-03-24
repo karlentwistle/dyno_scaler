@@ -1,11 +1,33 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @pipeline %>
-
-<%= render @dynos %>
-
+<%= header("Dynos") %>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          App ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Last Active At
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @dynos.each do |dyno| %>
+        <% klass=cycle("bg-white border-b dark:bg-gray-900
+            dark:border-gray-700", "border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700" ) %>
+        <%= content_tag(:tr, class: klass) do %>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= dyno.app_id %>
+          </th>
+          <td class="px-6 py-4">
+            <%= dyno.last_active_at %>
+          </td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <div>
-  <%= link_to "Back to pipelines", pipelines_path %>
-
-  <%= button_to "Destroy this pipeline", @pipeline, method: :delete %>
+  <%= link_to "Back to pipelines" , pipelines_path %>
+  <%= button_to "Destroy this pipeline" , @pipeline, method: :delete %>
 </div>
