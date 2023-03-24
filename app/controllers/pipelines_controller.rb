@@ -9,7 +9,7 @@ class PipelinesController < ApplicationController
 
   def show
     @pipeline = current_user.pipelines.find(params[:id])
-    @dynos = @pipeline.dynos
+    @dynos = @pipeline.dynos.recent_first
   end
 
   def new

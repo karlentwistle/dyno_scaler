@@ -6,6 +6,8 @@ class Dyno < ApplicationRecord
 
   validates :app_id, presence: true
 
+  scope :recent_first, -> { order(last_active_at: :desc) }
+
   def self.authenticate(given_log_token)
     Dyno.find_by(log_token: given_log_token)
   end

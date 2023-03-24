@@ -16,7 +16,8 @@ end
 def dyno_attributes(pipeline)
   {
     app_id: Faker::Internet.uuid,
-    pipeline:
+    pipeline:,
+    last_active_at: Faker::Time.between(from: 30.days.ago, to: Time.zone.now)
   }
 end
 
