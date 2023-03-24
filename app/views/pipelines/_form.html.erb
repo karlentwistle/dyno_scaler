@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :uuid, 'UUID' %>
-    <%= form.text_field :uuid %>
+  <div class="relative z-0 w-full mb-6 group">
+    <%= form.text_field :uuid, class: field_class, placeholder: " ", required: true %>
+    <%= form.label :uuid, 'UUID', class: label_class %>
   </div>
 
-  <div>
-    <%= form.label :api_key, 'API Key' %>
-    <%= form.text_field :api_key %>
+  <div class="relative z-0 w-full mb-6 group">
+    <%= form.text_field :api_key, class: field_class, placeholder: " ", required: true %>
+    <%= form.label :api_key, 'API Key', class: label_class %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="relative z-0 w-full mb-6 group">
+    <%= form.submit class: blue_button_class %>
   </div>
 <% end %>
