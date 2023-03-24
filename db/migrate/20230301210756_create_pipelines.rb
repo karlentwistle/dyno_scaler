@@ -6,6 +6,8 @@ class CreatePipelines < ActiveRecord::Migration[7.0]
       t.references :user, null: false, foreign_key: true
       t.string :uuid, null: false
       t.string :api_key, null: false
+      t.integer :base_size_id, null: false
+      t.integer :boost_size_id, null: false
 
       t.timestamps
     end

@@ -59,6 +59,9 @@ gem 'platform-api'
 # Tailwind CSS for Rails
 gem 'tailwindcss-rails', '~> 2.0'
 
+# ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource
+gem 'active_hash'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

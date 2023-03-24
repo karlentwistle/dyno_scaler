@@ -12,13 +12,23 @@
   <% end %>
 
   <div class="relative z-0 w-full mb-6 group">
-    <%= form.text_field :uuid, class: field_class, placeholder: " ", required: true %>
     <%= form.label :uuid, 'UUID', class: label_class %>
+    <%= form.text_field :uuid, class: field_class, placeholder: " ", required: true %>
   </div>
 
   <div class="relative z-0 w-full mb-6 group">
+    <%= form.label :api_key, 'API key', class: label_class %>
     <%= form.text_field :api_key, class: field_class, placeholder: " ", required: true %>
-    <%= form.label :api_key, 'API Key', class: label_class %>
+  </div>
+
+  <div class="relative z-0 w-full mb-6 group">
+    <%= form.label :base_size_id, 'Base dyno type', class: label_class %>
+    <%= form.select :base_size_id, DynoSize.base_sizes.pluck(:name, :id), {}, { class: select_class } %>
+  </div>
+
+  <div class="relative z-0 w-full mb-6 group">
+    <%= form.label :boost_size_id, 'Boost dyno type', class: label_class %>
+    <%= form.select :boost_size_id, DynoSize.boost_sizes.pluck(:name, :id), {}, { class: select_class } %>
   </div>
 
   <div class="relative z-0 w-full mb-6 group">

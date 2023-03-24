@@ -36,6 +36,6 @@ class PipelinesController < ApplicationController
   private
 
   def pipeline_params
-    params.require(:pipeline).permit(:uuid, :api_key)
+    params.require(:pipeline).permit(:uuid, :api_key, :base_size_id, :boost_size_id)
   end
 end

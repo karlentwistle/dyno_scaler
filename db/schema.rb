@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
     t.bigint "user_id", null: false
     t.string "uuid", null: false
     t.string "api_key", null: false
+    t.integer "base_size_id", null: false
+    t.integer "boost_size_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pipelines_on_user_id"
