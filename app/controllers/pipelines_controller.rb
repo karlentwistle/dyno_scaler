@@ -27,7 +27,7 @@ class PipelinesController < ApplicationController
   end
 
   def destroy
-    @pipeline = current_user.pipeline.find(params[:id])
+    @pipeline = current_user.pipelines.find(params[:id])
     @pipeline.destroy
 
     redirect_to pipelines_url, notice: 'Pipeline was successfully destroyed.'
