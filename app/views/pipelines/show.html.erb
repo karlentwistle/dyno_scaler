@@ -27,7 +27,7 @@
     </tbody>
   </table>
 </div>
-<div>
-  <%= link_to "Back to pipelines" , pipelines_path %>
-  <%= button_to "Destroy this pipeline" , @pipeline, method: :delete %>
+<div class="p-2">
+  <%= link_to("Back to pipelines", pipelines_path, class: blue_button_class) %>
+  <%= button_to("Destroy this pipeline" , @pipeline, method: :delete, class: red_button_class) %>
 </div>
