@@ -14,18 +14,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "dynos", force: :cascade do |t|
-    t.bigint "pipeline_id", null: false
-    t.string "log_token", null: false
-    t.string "app_id", null: false
-    t.datetime "last_active_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["app_id"], name: "index_dynos_on_app_id", unique: true
-    t.index ["log_token"], name: "index_dynos_on_log_token", unique: true
-    t.index ["pipeline_id"], name: "index_dynos_on_pipeline_id"
-  end
-
   create_table "pipelines", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "uuid", null: false
@@ -35,6 +23,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pipelines_on_user_id"
+  end
+
+  create_table "review_apps", force: :cascade do |t|
+    t.bigint "pipeline_id", null: false
+    t.string "log_token", null: false
+    t.string "app_id", null: false
+    t.datetime "last_active_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_review_apps_on_app_id", unique: true
+    t.index ["log_token"], name: "index_review_apps_on_log_token", unique: true
+    t.index ["pipeline_id"], name: "index_review_apps_on_pipeline_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -50,6 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
-  add_foreign_key "dynos", "pipelines"
   add_foreign_key "pipelines", "users"
+  add_foreign_key "review_apps", "pipelines"
 end

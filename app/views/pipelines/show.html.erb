@@ -12,15 +12,15 @@
       </tr>
     </thead>
     <tbody>
-      <% @dynos.each do |dyno| %>
+      <% @review_apps.each do |review_app| %>
         <% klass=cycle("bg-white border-b dark:bg-gray-900
             dark:border-gray-700", "border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700" ) %>
         <%= content_tag(:tr, class: klass) do %>
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-            <%= dyno.app_id %>
+            <%= review_app.app_id %>
           </th>
           <td class="px-6 py-4">
-            <%= dyno.last_active_at %>
+            <%= review_app.last_active_at %>
           </td>
         <% end %>
       <% end %>

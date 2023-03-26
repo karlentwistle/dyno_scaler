@@ -15,7 +15,7 @@ def pipeline_attributes(user)
   }
 end
 
-def dyno_attributes(pipeline)
+def review_app_attributes(pipeline)
   {
     app_id: Faker::Internet.uuid,
     pipeline:,
@@ -34,7 +34,7 @@ pipelines = Pipeline.create!(
 )
 
 pipelines.each do |pipeline|
-  Dyno.create!(
-    Array.new(DYNO_COUNT) { dyno_attributes(pipeline) }
+  ReviewApp.create!(
+    Array.new(DYNO_COUNT) { review_app_attributes(pipeline) }
   )
 end

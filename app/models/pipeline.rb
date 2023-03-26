@@ -12,6 +12,6 @@ class Pipeline < ApplicationRecord
   validates :base_size, inclusion: { in: DynoSize.base_sizes }
   validates :boost_size, inclusion: { in: DynoSize.boost_sizes }
 
-  has_many :dynos, dependent: :destroy
+  has_many :review_apps, dependent: :destroy
   belongs_to :user
 end

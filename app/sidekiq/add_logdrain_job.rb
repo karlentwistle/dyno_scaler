@@ -20,8 +20,8 @@ class AddLogdrainJob
       app_id = review_app.fetch('app').fetch('id')
       drain_urls = heroku_log_drain.list(app_id).pluck('url')
 
-      dyno = pipeline.dynos.find_or_create_by!(app_id:)
-      heroku_log_drain.create(app_id, url: dyno.logs_url) if drain_urls.exclude?(dyno.logs_url)
+      review_app = pipeline.review_apps.find_or_create_by!(app_id:)
+      heroku_log_drain.create(app_id, url: review_app.logs_url) if drain_urls.exclude?(review_app.logs_url)
     end
   end
 end

@@ -18,4 +18,3 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
   - /passwords/new
   - Flash banner to look better against navigation
   - Authenticated users dropdown box (who is Bonnie Green?)
-- Dyno model should actually be named ReviewApp

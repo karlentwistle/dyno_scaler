@@ -4,8 +4,8 @@ class LogsController < ActionController::Metal
   include ActionController::HttpAuthentication::Basic::ControllerMethods
 
   def create
-    if (dyno = authenticate)
-      dyno.request_received
+    if (review_app = authenticate)
+      review_app.request_received
       self.status = 201
     else
       request_http_basic_authentication
@@ -16,7 +16,7 @@ class LogsController < ActionController::Metal
 
   def authenticate
     authenticate_with_http_basic do |_given_name, given_password|
-      Dyno.authenticate(given_password)
+      ReviewApp.authenticate(given_password)
     end
   end
 end

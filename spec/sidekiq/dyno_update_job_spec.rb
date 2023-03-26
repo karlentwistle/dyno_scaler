@@ -16,11 +16,11 @@ RSpec.describe DynoUpdateJob, type: :job do
       base_size: DynoSize.performance_m,
       api_key: 'pipeline_api_key'
     )
-    dyno = create(:dyno, pipeline:, app_id: 'app_id', last_active_at: 31.minutes.ago)
+    review_app = create(:review_app, pipeline:, app_id: 'app_id', last_active_at: 31.minutes.ago)
 
     downscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_m.code)
 
-    described_class.new.perform(dyno.id)
+    described_class.new.perform(review_app.id)
 
     expect(downscale_dyno_request).to have_been_requested.once
   end
@@ -32,11 +32,11 @@ RSpec.describe DynoUpdateJob, type: :job do
       base_size: DynoSize.performance_m,
       api_key: 'pipeline_api_key'
     )
-    dyno = create(:dyno, pipeline:, app_id: 'app_id', last_active_at: 2.minutes.ago)
+    review_app = create(:review_app, pipeline:, app_id: 'app_id', last_active_at: 2.minutes.ago)
 
     upscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_l.code)
 
-    described_class.new.perform(dyno.id)
+    described_class.new.perform(review_app.id)
 
     expect(upscale_dyno_request).to have_been_requested.once
   end
