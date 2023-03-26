@@ -19,4 +19,10 @@ class Dyno < ApplicationRecord
   def logs_url
     "https://username:#{log_token}@#{Rails.configuration.x.log_drain.hostname}/logs"
   end
+
+  def optimal_size
+    return pipeline.boost_size if last_active_at > 30.minutes.ago
+
+    pipeline.base_size
+  end
 end

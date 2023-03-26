@@ -11,10 +11,34 @@ class DynoSize < ActiveHash::Base
   ]
 
   def self.smallest
-    find_by(code: 'eco')
+    eco
   end
 
   def self.largest
+    performance_l
+  end
+
+  def self.eco
+    find_by(code: 'eco')
+  end
+
+  def self.basic
+    find_by(code: 'basic')
+  end
+
+  def self.standard_1x
+    find_by(code: 'standard-1x')
+  end
+
+  def self.standard_2x
+    find_by(code: 'standard-2x')
+  end
+
+  def self.performance_m
+    find_by(code: 'performance-m')
+  end
+
+  def self.performance_l
     find_by(code: 'performance-l')
   end
 
