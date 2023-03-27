@@ -20,6 +20,8 @@ class PipelinesController < ApplicationController
     @pipeline = current_user.pipelines.new(pipeline_params)
 
     if @pipeline.save
+      AddLogdrainJob.perform_async(@pipeline.id)
+
       redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully created.'
     else
       render :new, status: :unprocessable_entity

@@ -3,15 +3,10 @@
 require 'rails_helper'
 
 describe 'User creates a pipeline' do
-  it 'they see a successful flash banner' do
+  it 'display a flash success banner' do
     visit new_pipeline_path(as: create(:user))
 
-    fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'
-    fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
-    select 'Basic', from: 'Base dyno type'
-    select 'Standard-1X', from: 'Boost dyno type'
-
-    click_button 'Create Pipeline'
+    create_pipeline
 
     expect(page).to have_text 'Pipeline was successfully created'
 
@@ -20,5 +15,22 @@ describe 'User creates a pipeline' do
       base_size_id: 2,
       boost_size_id: 3
     )
+  end
+
+  it 'enqueue a job to attach the log drain to each review app' do
+    visit new_pipeline_path(as: create(:user))
+
+    expect { create_pipeline }.to change(AddLogdrainJob.jobs, :size).from(0).to(1)
+  end
+
+  private
+
+  def create_pipeline
+    fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'
+    fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
+    select 'Basic', from: 'Base dyno type'
+    select 'Standard-1X', from: 'Boost dyno type'
+
+    click_button 'Create Pipeline'
   end
 end
