@@ -1,0 +1,1 @@
+279 <158>1 2023-03-27T20:20:21.238569+00:00 host heroku router - at=info method=GET path=\"/\" host=dynoscale-te-karlentwis-rfmcrq.herokuapp.com request_id=0a4f63a2-22c8-44e5-a61a-107f29c5211a fwd=\"140.248.40.41\" dyno=web.1 connect=0ms service=3ms status=200 bytes=3437 protocol=https

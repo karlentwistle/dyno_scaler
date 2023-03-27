@@ -62,6 +62,9 @@ gem 'tailwindcss-rails', '~> 2.0'
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource
 gem 'active_hash'
 
+# A syslog (rfc5424) parser written in Ruby and specifically targeting Heroku's http log drain.
+gem 'heroku-log-parser'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
