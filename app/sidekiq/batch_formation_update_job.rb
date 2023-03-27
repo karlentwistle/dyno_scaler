@@ -6,7 +6,7 @@ class BatchFormationUpdateJob
   sidekiq_options queue: 'within_one_minute'
 
   def perform
-    ReviewApp.in_batches do |review_app_batch|
+    ReviewApp.awaiting_update.in_batches do |review_app_batch|
       FormationUpdateJob.perform_bulk(
         review_app_batch.pluck(:id).map { |x| [x] }
       )

@@ -12,6 +12,23 @@ class ReviewApp < ApplicationRecord
 
   scope :recent_first, -> { order(last_active_at: :desc) }
 
+  scope :requires_upgrade, lambda {
+    joins(:pipeline)
+      .where(last_active_at: 30.minutes.ago..)
+      .where('review_apps.current_size_id != pipelines.boost_size_id')
+  }
+  scope :requires_downgrade, lambda {
+    joins(:pipeline)
+      .where(last_active_at: ..30.minutes.ago)
+      .where('review_apps.current_size_id != pipelines.base_size_id')
+  }
+  scope :awaiting_update, lambda {
+    joins(:pipeline)
+      .where(current_size_id: nil)
+      .or(requires_upgrade)
+      .or(requires_downgrade)
+  }
+
   def self.authenticate(given_log_token)
     find_by(log_token: given_log_token)
   end
