@@ -20,7 +20,7 @@
             <%= review_app.app_id %>
           </th>
           <td class="px-6 py-4">
-            <%= review_app.last_active_at %>
+            <%= time_ago_in_words(review_app.last_active_at) %> ago
           </td>
         <% end %>
       <% end %>
