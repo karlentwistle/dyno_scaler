@@ -15,6 +15,8 @@ class FormationUpdateJob
     heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)
     formation = PlatformAPI::Formation.new(heroku_client)
 
-    formation.update(review_app.app_id, 'web', quantity: 1, size: review_app.optimal_size.code)
+    response = formation.update(review_app.app_id, 'web', quantity: 1, size: review_app.optimal_size.code)
+
+    review_app.update!(current_size: DynoSize.find_by(code: response['size']))
   end
 end

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class ReviewApp < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :pipeline
+  belongs_to :current_size, class_name: 'DynoSize'
+
   has_secure_token :log_token
 
   validates :app_id, presence: true

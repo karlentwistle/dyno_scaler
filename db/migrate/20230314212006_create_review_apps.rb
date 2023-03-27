@@ -7,6 +7,7 @@ class CreateReviewApps < ActiveRecord::Migration[7.0]
       t.string :log_token, null: false
       t.string :app_id, null: false
       t.datetime :last_active_at
+      t.integer :current_size_id
 
       t.timestamps
     end

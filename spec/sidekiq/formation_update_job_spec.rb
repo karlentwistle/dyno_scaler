@@ -51,6 +51,22 @@ RSpec.describe FormationUpdateJob, type: :job do
           'Authorization' => 'Bearer pipeline_api_key'
         }
       )
-      .to_return(status: 200, body: '', headers: {})
+      .to_return(
+        status: 200,
+        body: '{
+          "app": {
+            "name": "example",
+            "id": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "command": "bundle exec rails server -p $PORT",
+          "created_at": "2012-01-01T12:00:00Z",
+          "id": "01234567-89ab-cdef-0123-456789abcdef",
+          "quantity": #{quantity},
+          "size": "#{size}",
+          "type": "web",
+          "updated_at": "2012-01-01T12:00:00Z"
+        }'.to_json,
+        headers: { 'Content-Type' => 'application/json;charset=utf-8' }
+      )
   end
 end
