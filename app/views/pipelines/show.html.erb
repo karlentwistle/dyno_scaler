@@ -7,6 +7,9 @@
           App ID
         </th>
         <th scope="col" class="px-6 py-3">
+          Dyno Size
+        </th>
+        <th scope="col" class="px-6 py-3">
           Last Active At
         </th>
       </tr>
@@ -19,6 +22,9 @@
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             <%= review_app.app_id %>
           </th>
+          <td class="px-6 py-4">
+            <%= review_app.current_size_name || 'Unknown' %>
+          </td>
           <td class="px-6 py-4">
             <%= time_ago_in_words(review_app.last_active_at) %> ago
           </td>

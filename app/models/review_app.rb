@@ -7,6 +7,7 @@ class ReviewApp < ApplicationRecord
   belongs_to :base_size, class_name: 'DynoSize'
   belongs_to :boost_size, class_name: 'DynoSize'
   belongs_to :current_size, class_name: 'DynoSize'
+  delegate :name, to: :current_size, prefix: true, allow_nil: true
 
   has_secure_token :log_token
 

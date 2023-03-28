@@ -16,10 +16,13 @@ def pipeline_attributes(user)
 end
 
 def review_app_attributes(pipeline)
+  current_size = [nil, DynoSize.base_sizes.sample].sample
+
   {
     app_id: Faker::Internet.uuid,
     pipeline:,
-    last_active_at: Faker::Time.between(from: 30.days.ago, to: Time.zone.now)
+    last_active_at: Faker::Time.between(from: 30.days.ago, to: Time.zone.now),
+    current_size:
   }
 end
 
