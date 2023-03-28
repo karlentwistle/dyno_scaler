@@ -46,7 +46,7 @@ class ReviewApp < ApplicationRecord
   end
 
   def optimal_size
-    return boost_size if last_active_at.nil? || last_active_at > 30.minutes.ago
+    return boost_size if last_active_at && last_active_at > 30.minutes.ago
 
     base_size
   end
