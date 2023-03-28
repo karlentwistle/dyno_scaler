@@ -14,7 +14,7 @@ class FormationUpdateJob
 
     begin
       response = update_formation(review_app)
-      review_app.update!(current_size: DynoSize.find_by(code: response['size']))
+      review_app.update!(current_size: DynoSize.find_by(name: response['size']))
     rescue Excon::Error::NotFound
       review_app.destroy!
     end
@@ -33,7 +33,7 @@ class FormationUpdateJob
         review_app.app_id,
         'web',
         quantity: 1,
-        size: review_app.optimal_size.code
+        size: review_app.optimal_size.name
       )
   end
 end

@@ -19,7 +19,7 @@ RSpec.describe FormationUpdateJob, type: :job do
       current_size: pipeline.boost_size
     )
 
-    upscale_dyno_request = stub_formation_update('app_id', 1, pipeline.boost_size.code)
+    upscale_dyno_request = stub_formation_update('app_id', 1, pipeline.boost_size.name)
 
     described_class.new.perform(review_app.id)
 
@@ -35,11 +35,12 @@ RSpec.describe FormationUpdateJob, type: :job do
     )
     review_app = create(:review_app, pipeline:, app_id: 'app_id', last_active_at: 31.minutes.ago)
 
-    downscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_m.code)
+    downscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_m.name)
 
     described_class.new.perform(review_app.id)
 
     expect(downscale_dyno_request).to have_been_requested.once
+    expect(review_app.reload.current_size).to eq(DynoSize.performance_m)
   end
 
   it 'upscales a web dyno if its been recently active' do
@@ -51,11 +52,12 @@ RSpec.describe FormationUpdateJob, type: :job do
     )
     review_app = create(:review_app, pipeline:, app_id: 'app_id', last_active_at: 2.minutes.ago)
 
-    upscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_l.code)
+    upscale_dyno_request = stub_formation_update('app_id', 1, DynoSize.performance_l.name)
 
     described_class.new.perform(review_app.id)
 
     expect(upscale_dyno_request).to have_been_requested.once
+    expect(review_app.reload.current_size).to eq(DynoSize.performance_l)
   end
 
   it 'destroys the review app if Heroku responds with a 404' do
@@ -81,19 +83,19 @@ RSpec.describe FormationUpdateJob, type: :job do
       )
       .to_return(
         status: 200,
-        body: '{
-          "app": {
-            "name": "example",
-            "id": "01234567-89ab-cdef-0123-456789abcdef"
+        body: {
+          app: {
+            name: 'example',
+            id: '01234567-89ab-cdef-0123-456789abcdef'
           },
-          "command": "bundle exec rails server -p $PORT",
-          "created_at": "2012-01-01T12:00:00Z",
-          "id": "01234567-89ab-cdef-0123-456789abcdef",
-          "quantity": #{quantity},
-          "size": "#{size}",
-          "type": "web",
-          "updated_at": "2012-01-01T12:00:00Z"
-        }'.to_json,
+          command: 'bundle exec rails server -p $PORT',
+          created_at: '2012-01-01T12:00:00Z',
+          id: '01234567-89ab-cdef-0123-456789abcdef',
+          quantity:,
+          size:,
+          type: 'web',
+          updated_at: '2012-01-01T12:00:00Z'
+        }.to_json,
         headers: { 'Content-Type' => 'application/json;charset=utf-8' }
       )
   end
