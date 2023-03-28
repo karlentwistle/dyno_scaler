@@ -58,6 +58,17 @@ RSpec.describe FormationUpdateJob, type: :job do
     expect(upscale_dyno_request).to have_been_requested.once
   end
 
+  it 'destroys the review app if Heroku responds with a 404' do
+    pipeline = create(:pipeline, api_key: 'pipeline_api_key')
+    review_app = create(:review_app, pipeline:, app_id: 'app_id')
+
+    stub_request(:patch, 'https://api.heroku.com/apps/app_id/formation/web').to_return(status: 404)
+
+    described_class.new.perform(review_app.id)
+
+    expect { review_app.reload }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
   private
 
   def stub_formation_update(app_id, quantity, size)

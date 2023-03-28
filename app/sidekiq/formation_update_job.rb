@@ -12,9 +12,12 @@ class FormationUpdateJob
 
     return if review_app.optimal_size?
 
-    response = update_formation(review_app)
-
-    review_app.update!(current_size: DynoSize.find_by(code: response['size']))
+    begin
+      response = update_formation(review_app)
+      review_app.update!(current_size: DynoSize.find_by(code: response['size']))
+    rescue Excon::Error::NotFound
+      review_app.destroy!
+    end
   end
 
   private
