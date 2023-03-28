@@ -15,15 +15,23 @@ RSpec.describe ReviewApp do
 
   describe '#optimal_size' do
     it 'returns base_size if dyno hasnt been active for 30 minutes' do
-      pipeline = build(:pipeline, base_size: DynoSize.basic, boost_size: DynoSize.standard_2x)
-      review_app = build(:review_app, pipeline:, last_active_at: 31.minutes.ago)
+      review_app = build(
+        :review_app,
+        base_size: DynoSize.basic,
+        boost_size: DynoSize.standard_2x,
+        last_active_at: 31.minutes.ago
+      )
 
       expect(review_app.optimal_size).to eq(DynoSize.basic)
     end
 
     it 'returns boost_size if dyno has been recently active' do
-      pipeline = build(:pipeline, base_size: DynoSize.basic, boost_size: DynoSize.standard_2x)
-      review_app = build(:review_app, pipeline:, last_active_at: 29.minutes.ago)
+      review_app = build(
+        :review_app,
+        base_size: DynoSize.basic,
+        boost_size: DynoSize.standard_2x,
+        last_active_at: 29.minutes.ago
+      )
 
       expect(review_app.optimal_size).to eq(DynoSize.standard_2x)
     end

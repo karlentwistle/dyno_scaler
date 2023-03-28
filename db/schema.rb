@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
     t.string "log_token", null: false
     t.string "app_id", null: false
     t.datetime "last_active_at"
+    t.integer "base_size_id", null: false
+    t.integer "boost_size_id", null: false
     t.integer "current_size_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
