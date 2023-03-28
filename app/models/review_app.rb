@@ -15,6 +15,7 @@ class ReviewApp < ApplicationRecord
   validates :boost_size, inclusion: { in: DynoSize.all }
 
   before_validation :denormalize_dyno_sizes
+  before_create :set_last_active_at
 
   scope :recent_first, -> { order(last_active_at: :desc) }
   scope :active, -> { where(last_active_at: 30.minutes.ago..) }
@@ -46,7 +47,7 @@ class ReviewApp < ApplicationRecord
   end
 
   def optimal_size
-    return boost_size if last_active_at && last_active_at > 30.minutes.ago
+    return boost_size if last_active_at > 30.minutes.ago
 
     base_size
   end
@@ -58,5 +59,9 @@ class ReviewApp < ApplicationRecord
 
     self.base_size ||= pipeline.base_size
     self.boost_size ||= pipeline.boost_size
+  end
+
+  def set_last_active_at
+    self.last_active_at ||= DateTime.now
   end
 end

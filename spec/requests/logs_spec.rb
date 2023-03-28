@@ -30,19 +30,19 @@ RSpec.describe 'Logs' do
     end
 
     it 'doesnt update associated review_apps last_active_at when a non-router request is received' do
-      review_app = create(:review_app, last_active_at: nil)
+      review_app = create(:review_app, last_active_at: 1.year.ago)
 
-      post_with_basic_auth(
-        password: review_app.log_token,
-        body: Rails.root.join('spec/fixtures/heroku/web').read
-      )
+      expect do
+        post_with_basic_auth(
+          password: review_app.log_token,
+          body: Rails.root.join('spec/fixtures/heroku/web').read
+        )
 
-      post_with_basic_auth(
-        password: review_app.log_token,
-        body: Rails.root.join('spec/fixtures/heroku/runtime_metric').read
-      )
-
-      expect(review_app.reload.last_active_at).to be_nil
+        post_with_basic_auth(
+          password: review_app.log_token,
+          body: Rails.root.join('spec/fixtures/heroku/runtime_metric').read
+        )
+      end.not_to(change { review_app.reload.last_active_at })
     end
   end
 

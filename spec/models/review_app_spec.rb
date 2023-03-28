@@ -25,17 +25,6 @@ RSpec.describe ReviewApp do
       expect(review_app.optimal_size).to eq(DynoSize.basic)
     end
 
-    it 'return base_size if dyno has unknown last_active_at' do
-      review_app = build(
-        :review_app,
-        base_size: DynoSize.basic,
-        boost_size: DynoSize.standard_2x,
-        last_active_at: nil
-      )
-
-      expect(review_app.optimal_size).to eq(DynoSize.basic)
-    end
-
     it 'returns boost_size if dyno has been recently active' do
       review_app = build(
         :review_app,
