@@ -35,10 +35,20 @@ class ReviewApp < ApplicationRecord
 
   def request_received
     update_column(:last_active_at, DateTime.now)
+
+    FormationUpdateJob.perform_async(id) if inadaquate_size?
   end
 
   def logs_url
     "https://username:#{log_token}@#{Rails.configuration.x.log_drain.hostname}/logs"
+  end
+
+  def optimal_size?
+    current_size == optimal_size
+  end
+
+  def inadaquate_size?
+    !optimal_size?
   end
 
   def optimal_size

@@ -10,13 +10,27 @@ class FormationUpdateJob
   def perform(review_app_id)
     return unless (review_app = ReviewApp.find_by(id: review_app_id))
 
-    pipeline = review_app.pipeline
+    return if review_app.optimal_size?
 
-    heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)
-    formation = PlatformAPI::Formation.new(heroku_client)
-
-    response = formation.update(review_app.app_id, 'web', quantity: 1, size: review_app.optimal_size.code)
+    response = update_formation(review_app)
 
     review_app.update!(current_size: DynoSize.find_by(code: response['size']))
+  end
+
+  private
+
+  def formation_update_client(pipeline)
+    heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)
+    PlatformAPI::Formation.new(heroku_client)
+  end
+
+  def update_formation(review_app)
+    formation_update_client(review_app.pipeline)
+      .update(
+        review_app.app_id,
+        'web',
+        quantity: 1,
+        size: review_app.optimal_size.code
+      )
   end
 end

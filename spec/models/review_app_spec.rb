@@ -28,4 +28,21 @@ RSpec.describe ReviewApp do
       expect(review_app.optimal_size).to eq(DynoSize.standard_2x)
     end
   end
+
+  describe '#request_received' do
+    it 'updates last_active_at' do
+      review_app = create(:review_app, last_active_at: nil)
+
+      review_app.request_received
+
+      expect(review_app.last_active_at).to be_within(1.second).of(Time.zone.now)
+    end
+
+    it 'enqueues FormationUpdateJob if current dyno isnt the optiomal size' do
+      pipeline = create(:pipeline, base_size: DynoSize.basic, boost_size: DynoSize.standard_2x)
+      review_app = create(:review_app, pipeline:, current_size: pipeline.base_size, last_active_at: 31.minutes.ago)
+
+      expect { review_app.request_received }.to change(FormationUpdateJob.jobs, :size).by(1)
+    end
+  end
 end

@@ -9,6 +9,23 @@ RSpec.describe FormationUpdateJob, type: :job do
     expect { subject.perform(1) }.not_to raise_error
   end
 
+  it 'doesnt send a request if the dyno is already the optimal size' do
+    pipeline = create(:pipeline, api_key: 'pipeline_api_key')
+    review_app = create(
+      :review_app,
+      pipeline:,
+      app_id: 'app_id',
+      last_active_at: 1.second.ago,
+      current_size: pipeline.boost_size
+    )
+
+    upscale_dyno_request = stub_formation_update('app_id', 1, pipeline.boost_size.code)
+
+    described_class.new.perform(review_app.id)
+
+    expect(upscale_dyno_request).not_to have_been_requested
+  end
+
   it 'downscales a web dyno if it hasnt been active for 30 minutes' do
     pipeline = create(
       :pipeline,
