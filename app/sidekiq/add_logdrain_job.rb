@@ -10,10 +10,8 @@ class AddLogdrainJob
   def perform(pipeline_id)
     return unless (pipeline = Pipeline.find_by(id: pipeline_id))
 
-    heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)
-    heroku_review_app = PlatformAPI::ReviewApp.new(heroku_client)
-    heroku_log_drain = PlatformAPI::LogDrain.new(heroku_client)
-
+    heroku_review_app = PlatformAPI::ReviewApp.new(pipeline.platform_api)
+    heroku_log_drain = PlatformAPI::LogDrain.new(pipeline.platform_api)
     review_apps = heroku_review_app.list(pipeline.uuid)
 
     review_apps.each do |review_app|

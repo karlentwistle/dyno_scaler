@@ -9,6 +9,12 @@ module ApplicationHelper
     end
   end
 
+  def subheader(text)
+    content_tag(:h2, class: 'text-4xl font-extrabold dark:text-white') do
+      text
+    end
+  end
+
   def button_base_class
     [
       'focus:outline-none',

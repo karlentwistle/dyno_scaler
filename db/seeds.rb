@@ -11,6 +11,7 @@ def pipeline_attributes(user)
     api_key: Faker::Internet.uuid,
     base_size: DynoSize.base_sizes.sample,
     boost_size: DynoSize.boost_sizes.sample,
+    name: Faker::App.name,
     user:
   }
 end
