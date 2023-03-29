@@ -10,7 +10,7 @@ RSpec.describe BatchAddLogdrainJob, type: :job do
 
       described_class.new.perform
 
-      expect(AddLogdrainJob.jobs.pluck('args')).to match_array([[1], [2]])
+      expect(AddLogdrainJob.jobs.pluck('args')).to contain_exactly([1], [2])
     end
   end
 end

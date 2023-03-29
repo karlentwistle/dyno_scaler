@@ -40,12 +40,10 @@ RSpec.describe BatchFormationUpdateJob, type: :job do
 
       described_class.new.perform
 
-      expect(FormationUpdateJob.jobs.pluck('args')).to match_array(
-        [
-          [awaiting_update_a.id],
-          [awaiting_update_b.id],
-          [awaiting_update_c.id]
-        ]
+      expect(FormationUpdateJob.jobs.pluck('args')).to contain_exactly(
+        [awaiting_update_a.id],
+        [awaiting_update_b.id],
+        [awaiting_update_c.id]
       )
     end
   end
