@@ -1,7 +1,5 @@
-<%= header("New Pipeline") %>
+<div class="mb-4"><%= header("New Pipeline") %></div>
 
 <%= render "form", pipeline: @pipeline %>
 
-<div>
-  <%= link_to "Back to pipelines", pipelines_path, class: blue_button_class %>
-</div>
+<%= link_to "Back to pipelines", pipelines_path, class: blue_button_class %>
