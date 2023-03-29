@@ -30,6 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_14_212006) do
     t.bigint "pipeline_id", null: false
     t.string "log_token", null: false
     t.string "app_id", null: false
+    t.string "branch", null: false
+    t.integer "pr_number"
     t.datetime "last_active_at", null: false
     t.integer "base_size_id", null: false
     t.integer "boost_size_id", null: false

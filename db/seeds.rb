@@ -23,6 +23,8 @@ def review_app_attributes(pipeline)
     app_id: Faker::Internet.uuid,
     pipeline:,
     last_active_at: Faker::Time.between(from: 30.days.ago, to: Time.zone.now),
+    branch: Faker::Hipster.words.join('-'),
+    pr_number: [nil, rand(1..1000)].sample,
     current_size:
   }
 end

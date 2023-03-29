@@ -17,10 +17,10 @@ describe 'User views pipeline' do
   it 'shows a list of review apps associated with the pipeline ordered by last_active_at' do
     owner = create(:user)
     pipeline = create(:pipeline, user: owner)
-    create(:review_app, pipeline:, app_id: 'Delta', last_active_at: 1.year.ago)
-    create(:review_app, pipeline:, app_id: 'Charlie', last_active_at: 1.week.ago)
-    create(:review_app, pipeline:, app_id: 'Bravo', last_active_at: 1.day.ago)
-    create(:review_app, pipeline:, app_id: 'Alpha', last_active_at: nil)
+    create(:review_app, pipeline:, branch: 'Delta', last_active_at: 1.year.ago)
+    create(:review_app, pipeline:, branch: 'Charlie', last_active_at: 1.week.ago)
+    create(:review_app, pipeline:, branch: 'Bravo', last_active_at: 1.day.ago)
+    create(:review_app, pipeline:, branch: 'Alpha', last_active_at: nil)
 
     visit pipeline_path(pipeline, as: owner)
 

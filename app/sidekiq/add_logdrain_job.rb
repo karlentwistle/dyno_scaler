@@ -14,12 +14,24 @@ class AddLogdrainJob
     heroku_log_drain = PlatformAPI::LogDrain.new(pipeline.platform_api)
     review_apps = heroku_review_app.list(pipeline.uuid)
 
-    review_apps.each do |review_app|
-      app_id = review_app.fetch('app').fetch('id')
-      drain_urls = heroku_log_drain.list(app_id).pluck('url')
+    review_apps.each do |review_app_params|
+      review_app = find_or_create_review_app(pipeline, review_app_params)
+      drain_urls = heroku_log_drain.list(review_app.app_id).pluck('url')
 
-      review_app = pipeline.review_apps.find_or_create_by!(app_id:)
-      heroku_log_drain.create(app_id, url: review_app.logs_url) if drain_urls.exclude?(review_app.logs_url)
+      heroku_log_drain.create(review_app.app_id, url: review_app.logs_url) if drain_urls.exclude?(review_app.logs_url)
+    end
+  end
+
+  private
+
+  def find_or_create_review_app(pipeline, params)
+    app_id = params.dig('app', 'id')
+    branch = params['branch']
+    pr_number = params['pr_number']
+
+    pipeline.review_apps.find_or_create_by!(app_id:) do |new_review_app|
+      new_review_app.branch = branch
+      new_review_app.pr_number = pr_number
     end
   end
 end

@@ -12,6 +12,7 @@ class ReviewApp < ApplicationRecord
   has_secure_token :log_token
 
   validates :app_id, presence: true
+  validates :branch, presence: true
   validates :base_size, inclusion: { in: DynoSize.all }
   validates :boost_size, inclusion: { in: DynoSize.all }
 

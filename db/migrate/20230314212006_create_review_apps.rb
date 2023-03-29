@@ -6,6 +6,8 @@ class CreateReviewApps < ActiveRecord::Migration[7.0]
       t.references :pipeline, null: false, foreign_key: true
       t.string :log_token, null: false
       t.string :app_id, null: false
+      t.string :branch, null: false
+      t.integer :pr_number
       t.datetime :last_active_at, null: false
       t.integer :base_size_id, null: false
       t.integer :boost_size_id, null: false
