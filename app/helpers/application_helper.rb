@@ -10,7 +10,7 @@ module ApplicationHelper
   end
 
   def subheader(text)
-    content_tag(:h2, class: 'text-4xl font-extrabold dark:text-white') do
+    content_tag(:h2, class: 'font-extrabold dark:text-white text-3xl') do
       text
     end
   end
