@@ -65,6 +65,10 @@ gem 'active_hash'
 # A syslog (rfc5424) parser written in Ruby and specifically targeting Heroku's http log drain.
 gem 'heroku-log-parser'
 
+# Sentry's Ruby SDK allows users to report messages, exceptions, and tracing events.
+gem 'sentry-rails', require: false
+gem 'sentry-ruby', require: false
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
