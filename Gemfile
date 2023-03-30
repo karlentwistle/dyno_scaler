@@ -66,8 +66,8 @@ gem 'active_hash'
 gem 'heroku-log-parser'
 
 # Sentry's Ruby SDK allows users to report messages, exceptions, and tracing events.
-gem 'sentry-rails', require: false
-gem 'sentry-ruby', require: false
+gem 'sentry-rails'
+gem 'sentry-ruby'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
