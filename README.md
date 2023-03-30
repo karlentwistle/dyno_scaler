@@ -7,7 +7,6 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
 - Add page
   - Edit pipeline page (so users can adjust base / boost size)
 - Style
-  - /sign_in
   - /sign_up
   - /passwords/new
   - Flash banner to look better against navigation

@@ -30,15 +30,15 @@ module ApplicationHelper
     ]
   end
 
-  def blue_button_class
-    button_base_class + [
+  def blue_button_class(*additonals)
+    (button_base_class + [
       'bg-blue-700',
       'hover:bg-blue-800',
       'focus:ring-blue-300',
       'dark:bg-blue-600',
       'dark:hover:bg-blue-700',
       'dark:focus:ring-blue-800'
-    ]
+    ] + additonals)
   end
 
   def red_button_class
