@@ -11,4 +11,3 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
   - /sign_up
   - /passwords/new
   - Flash banner to look better against navigation
-  - Authenticated users dropdown box (who is Bonnie Green?)
