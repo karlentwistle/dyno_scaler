@@ -3,6 +3,8 @@
 class JurassicDynoExtinctionCheckJob
   include Sidekiq::Job
 
+  sidekiq_options queue: 'within_one_minute'
+
   def perform(id)
     return unless (review_app = ReviewApp.find_by(id:))
 
