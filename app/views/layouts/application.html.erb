@@ -11,13 +11,15 @@
   </head>
 
   <body class="bg-gray-900">
-    <%= render partial: "layouts/navbar" %>
-    <%= render partial: "layouts/flash" %>
+    <div class="flex flex-col h-screen justify-between">
+      <%= render partial: "layouts/navbar" %>
+      <%= render partial: "layouts/flash" %>
 
-    <div class="container justify-between mx-auto py-5 px-2">
-      <%= yield %>
+      <main class="mb-auto container mx-auto py-5 px-2">
+        <%= yield %>
+      </main>
+
+      <%= render partial: "layouts/footer" %>
     </div>
-
-    <%= render partial: "layouts/footer" %>
   </body>
 </html>
