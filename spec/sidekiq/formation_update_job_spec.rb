@@ -60,7 +60,7 @@ RSpec.describe FormationUpdateJob, type: :job do
     expect(review_app.reload.current_size).to eq(DynoSize.performance_l)
   end
 
-  it 'destroys the review app if Heroku responds with a 404' do
+  it 'enqueues an extinction check for the review app if Heroku responds with a 404' do
     pipeline = create(:pipeline, api_key: 'pipeline_api_key')
     review_app = create(:review_app, pipeline:, app_id: 'app_id')
 
@@ -68,7 +68,7 @@ RSpec.describe FormationUpdateJob, type: :job do
 
     described_class.new.perform(review_app.id)
 
-    expect { review_app.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    expect(JurassicDynoExtinctionCheckJob.jobs.pluck('args')).to contain_exactly([review_app.id])
   end
 
   private

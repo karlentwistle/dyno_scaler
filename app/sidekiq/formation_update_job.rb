@@ -16,7 +16,7 @@ class FormationUpdateJob
       response = update_formation(review_app)
       review_app.update!(current_size: DynoSize.find_by(name: response['size']))
     rescue Excon::Error::NotFound
-      review_app.destroy!
+      JurassicDynoExtinctionCheckJob.perform_async(review_app.id)
     end
   end
 
