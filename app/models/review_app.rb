@@ -22,6 +22,7 @@ class ReviewApp < ApplicationRecord
   scope :recent_first, -> { order(last_active_at: :desc) }
   scope :active, -> { where(last_active_at: 30.minutes.ago..) }
   scope :inactive, -> { where(last_active_at: ..30.minutes.ago) }
+  scope :potentially_extinct, -> { where(last_active_at: ..6.hours.ago) }
   scope :requires_upgrade, -> { active.where(arel_table[:current_size_id].not_eq(arel_table[:boost_size_id])) }
   scope :requires_downgrade, -> { inactive.where(arel_table[:current_size_id].not_eq(arel_table[:base_size_id])) }
   scope :awaiting_update, -> { where(current_size_id: nil).or(requires_upgrade).or(requires_downgrade) }

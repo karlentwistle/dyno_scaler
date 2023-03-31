@@ -10,6 +10,3 @@ If the app receives an HTTP request, boost the dyno to configured maximum size.
   - /sign_up
   - /passwords/new
   - Flash banner to look better against navigation
-- Heroku
-  - We need to check with Heroku that a dyno is still alive periodically. Otherwise, a dyno could be deleted but will remain inactive indefinitely.
- 

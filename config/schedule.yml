@@ -7,3 +7,8 @@ batch_formation_update:
   cron: "* * * * *"
   class: "BatchFormationUpdateJob"
   queue: within_one_minute
+
+batch_jurassic_dyno_extinction_check:
+  cron: "0 * * * *"
+  class: "BatchJurassicDynoExtinctionCheckJob"
+  queue: within_one_minute
