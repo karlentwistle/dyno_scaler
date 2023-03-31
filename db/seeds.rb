@@ -5,6 +5,10 @@ require 'faker'
 PIPELINE_COUNT = 2
 DYNO_COUNT = 10 # per pipeline
 
+def generate_branch_name
+  "#{Faker::Lorem.words(number: rand(1..10)).map(&:downcase).join('-')}-#{Faker::Number.number(digits: 5)}"
+end
+
 def pipeline_attributes(user)
   {
     uuid: Faker::Internet.uuid,
@@ -23,7 +27,7 @@ def review_app_attributes(pipeline)
     app_id: Faker::Internet.uuid,
     pipeline:,
     last_active_at: Faker::Time.between(from: 30.days.ago, to: Time.zone.now),
-    branch: Faker::Hipster.words.join('-'),
+    branch: generate_branch_name,
     pr_number: [nil, rand(1..1000)].sample,
     current_size:
   }
