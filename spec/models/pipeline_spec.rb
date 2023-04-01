@@ -24,4 +24,24 @@ RSpec.describe Pipeline do
       expect(build(:pipeline, boost_size: DynoSize.smallest)).to be_invalid
     end
   end
+
+  describe 'associations' do
+    it 'updates associated review apps when base_size is updated' do
+      pipeline = create(:pipeline, base_size: DynoSize.eco)
+      create_list(:review_app, 3, pipeline:)
+
+      pipeline.update(base_size: DynoSize.standard_1x)
+
+      expect(pipeline.review_apps.pluck(:base_size_id).uniq).to eql([DynoSize.standard_1x.id])
+    end
+
+    it 'updates associated review apps when boost_size is updated' do
+      pipeline = create(:pipeline, boost_size: DynoSize.basic)
+      create_list(:review_app, 3, pipeline:)
+
+      pipeline.update(boost_size: DynoSize.performance_l)
+
+      expect(pipeline.review_apps.pluck(:boost_size_id).uniq).to eql([DynoSize.performance_l.id])
+    end
+  end
 end

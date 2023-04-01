@@ -18,6 +18,8 @@ class Pipeline < ApplicationRecord
 
   before_validation :fetch_pipeline_info
 
+  after_update :sync_denormalized_data
+
   def platform_api
     @platform_api ||= PlatformAPI.connect_oauth(api_key)
   end
@@ -30,5 +32,9 @@ class Pipeline < ApplicationRecord
     errors.add(:api_key, 'is invalid')
   rescue Excon::Error::NotFound
     errors.add(:uuid, 'is invalid')
+  end
+
+  def sync_denormalized_data
+    review_apps.update_all(base_size_id:, boost_size_id:)
   end
 end
