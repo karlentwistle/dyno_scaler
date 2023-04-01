@@ -16,8 +16,12 @@ class PipelinesController < ApplicationController
     @pipeline = current_user.pipelines.new
   end
 
+  def edit
+    @pipeline = current_user.pipelines.find(params[:id])
+  end
+
   def create
-    @pipeline = current_user.pipelines.new(pipeline_params)
+    @pipeline = current_user.pipelines.new(create_pipeline_params)
 
     if @pipeline.save
       AddLogdrainJob.perform_async(@pipeline.id)
@@ -25,6 +29,16 @@ class PipelinesController < ApplicationController
       redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully created.'
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @pipeline = current_user.pipelines.find(params[:id])
+
+    if @pipeline.update(update_pipeline_params)
+      redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -37,7 +51,11 @@ class PipelinesController < ApplicationController
 
   private
 
-  def pipeline_params
+  def create_pipeline_params
     params.require(:pipeline).permit(:uuid, :api_key, :base_size_id, :boost_size_id)
+  end
+
+  def update_pipeline_params
+    create_pipeline_params.slice(:api_key, :base_size_id, :boost_size_id)
   end
 end

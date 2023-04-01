@@ -39,5 +39,6 @@
 </div>
 <div class="p-2">
   <%= link_to("Back to pipelines", pipelines_path, class: blue_button_class) %>
+  <%= link_to("Edit", edit_pipeline_path(@pipeline), class: blue_button_class) %>
   <%= button_to("Destroy this pipeline" , @pipeline, method: :delete, class: red_button_class) %>
 </div>

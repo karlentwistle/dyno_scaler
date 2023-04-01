@@ -13,7 +13,12 @@
 
   <div class="relative z-0 w-full mb-6 group">
     <%= form.label :uuid, 'UUID', class: label_class %>
-    <%= form.text_field :uuid, class: field_class, placeholder: " ", required: true %>
+    <%= form.text_field :uuid,
+      class: field_class,
+      placeholder: " ",
+      required: form.object.new_record?,
+      disabled: form.object.persisted?
+    %>
   </div>
 
   <div class="relative z-0 w-full mb-6 group">

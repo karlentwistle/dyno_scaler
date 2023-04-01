@@ -1,0 +1,5 @@
+<div class="mb-4"><%= header("Edit Pipeline") %></div>
+
+<%= render "form", pipeline: @pipeline %>
+
+<%= link_to "Back to pipeline", pipeline_path(@pipeline), class: blue_button_class %>

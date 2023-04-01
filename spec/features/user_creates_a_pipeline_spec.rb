@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'User creates a pipeline' do
-  it 'display a flash success banner' do
+  it 'persists the changes and display a flash success banner' do
     visit new_pipeline_path(as: create(:user))
 
     create_pipeline(name: 'My Pipeline')
@@ -11,11 +11,9 @@ describe 'User creates a pipeline' do
     expect(page).to have_text 'Pipeline was successfully created'
     expect(page).to have_text 'My Pipeline'
 
-    # TODO: - refactor this to click on pipeline edit form and assert the values are set
-    expect(Pipeline.last).to have_attributes(
-      base_size_id: 2,
-      boost_size_id: 3
-    )
+    click_on 'Edit'
+    expect(page).to have_select('Base dyno type', selected: 'Basic')
+    expect(page).to have_select('Boost dyno type', selected: 'Standard-1X')
   end
 
   it 'enqueue a job to attach the log drain to each review app' do
