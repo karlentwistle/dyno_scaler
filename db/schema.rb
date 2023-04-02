@@ -58,11 +58,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
     t.boolean "admin", default: false, null: false
+    t.bigint "organisation_id", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
   add_foreign_key "pipelines", "users"
   add_foreign_key "review_apps", "pipelines"
+  add_foreign_key "users", "organisations"
 end

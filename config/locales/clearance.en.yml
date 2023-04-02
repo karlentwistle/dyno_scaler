@@ -37,6 +37,8 @@ en:
         submit: Sign in
       user:
         create: Sign up
+      new_user_form:
+        create: Sign up
   layouts:
     application:
       sign_in: Sign in

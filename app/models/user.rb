@@ -4,4 +4,6 @@ class User < ApplicationRecord
   include Clearance::User
 
   has_many :pipelines, dependent: :destroy
+
+  belongs_to :organisation
 end
