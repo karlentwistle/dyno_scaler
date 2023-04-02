@@ -1,15 +1,17 @@
-<div id="clearance" class="sign-up">
-  <h2><%= t(".title") %></h2>
+<div class="md:my-12 mx-auto w-full lg:w-1/2 bg-gray-800 p-12 rounded-lg shadow-lg">
+  <div class="text-center my-8"><%= header t(".title") %></div>
 
-  <%= form_for @form, url: users_path do |form| %>
-    <%= render partial: '/users/form', object: form %>
+  <div class="mx-auto max-w-md">
+    <%= form_for @form, url: users_path do |form| %>
+      <%= render partial: '/users/form', object: form %>
 
-    <div class="submit-field">
-      <%= form.submit %>
-    </div>
+      <div class="text-center">
+        <%= form.submit class: blue_button_class("min-w-full") %>
+      </div>
 
-    <div class="other-links">
-      <%= link_to t(".sign_in"), sign_in_path %>
-    </div>
-  <% end %>
+      <div class="flex flex-row items-center justify-between my-4">
+        <%= link_to t(".sign_in"), sign_in_path, class: 'text-white' %>
+      </div>
+    <% end %>
+  </div>
 </div>
