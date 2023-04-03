@@ -68,6 +68,7 @@ gem 'heroku-log-parser'
 # Sentry's Ruby SDK allows users to report messages, exceptions, and tracing events.
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'sentry-sidekiq'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
