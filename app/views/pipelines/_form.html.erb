@@ -36,6 +36,18 @@
     <%= form.select :boost_size_id, DynoSize.boost_sizes.pluck(:name, :id), {}, { class: select_class } %>
   </div>
 
+  <div class="flex mb-4">
+    <%= content_tag(:div, class: checkbox_input_container_class) do %>
+      <%= form.check_box :set_env, class: checkbox_input_class %>
+    <% end %>
+    <%= content_tag(:div, class: checkbox_label_container_class) do %>
+      <%= form.label :set_env, 'Set env variable', class: checkbox_label_class %>
+      <%= content_tag(:p, class: checkbox_label_additional_info_class) do %>
+        Set the environment variable <code>DYNO_SCALER_DYNO_SIZE</code> to the current dyno size.
+      <% end %>
+    <% end %>
+  </div>
+
   <div class="relative z-0 w-full mb-6 group">
     <%= form.submit class: blue_button_class %>
   </div>

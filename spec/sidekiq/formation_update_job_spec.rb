@@ -71,6 +71,23 @@ RSpec.describe FormationUpdateJob, type: :job do
     expect(JurassicDynoExtinctionCheckJob.jobs.pluck('args')).to contain_exactly([review_app.id])
   end
 
+  it 'set DYNO_SCALER_DYNO_SIZE env var if pipelines set_env is true' do
+    pipeline = create(
+      :pipeline,
+      boost_size: DynoSize.performance_l,
+      api_key: 'pipeline_api_key',
+      set_env: true
+    )
+    review_app = create(:review_app, pipeline:, app_id: 'app_id', last_active_at: 2.minutes.ago)
+
+    stub_formation_update('app_id', 1, DynoSize.performance_l.name)
+    set_env_request = stub_set_env('app_id', DynoSize.performance_l.name)
+
+    described_class.new.perform(review_app.id)
+
+    expect(set_env_request).to have_been_requested.once
+  end
+
   private
 
   def stub_formation_update(app_id, quantity, size)
@@ -98,5 +115,16 @@ RSpec.describe FormationUpdateJob, type: :job do
         }.to_json,
         headers: { 'Content-Type' => 'application/json;charset=utf-8' }
       )
+  end
+
+  def stub_set_env(app_id, size)
+    stub_request(:patch, "https://api.heroku.com/apps/#{app_id}/config-vars")
+      .with(
+        body: { 'DYNO_SCALER_DYNO_SIZE' => size }.to_json,
+        headers: {
+          'Authorization' => 'Bearer pipeline_api_key'
+        }
+      )
+      .to_return(status: 200, body: '', headers: {})
   end
 end

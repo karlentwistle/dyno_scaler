@@ -14,6 +14,7 @@ describe 'User creates a pipeline' do
     click_on 'Edit'
     expect(page).to have_select('Base dyno type', selected: 'Basic')
     expect(page).to have_select('Boost dyno type', selected: 'Standard-1X')
+    expect(page).to have_checked_field('Set env variable')
   end
 
   it 'enqueue a job to attach the log drain to each review app' do
@@ -55,6 +56,7 @@ describe 'User creates a pipeline' do
     fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
     select 'Basic', from: 'Base dyno type'
     select 'Standard-1X', from: 'Boost dyno type'
+    check 'Set env variable'
 
     click_button 'Create Pipeline'
   end
