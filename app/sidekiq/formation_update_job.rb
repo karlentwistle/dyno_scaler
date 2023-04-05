@@ -12,16 +12,21 @@ class FormationUpdateJob
 
     return if review_app.optimal_size?
 
-    begin
-      response = update_formation(review_app)
-      update_env_vars(review_app, response['size']) if review_app.pipeline.set_env?
-      review_app.update!(current_size: DynoSize.find_by(name: response['size']))
-    rescue Excon::Error::NotFound
-      JurassicDynoExtinctionCheckJob.perform_async(review_app.id)
+    response = HandleMissingHerokuAppService.new(review_app.id).call do
+      update_formation(review_app)
     end
+
+    return if response.failure?
+
+    persist_new_size(review_app, response.message['size'])
   end
 
   private
+
+  def persist_new_size(review_app, new_size)
+    update_env_vars(review_app, new_size) if review_app.pipeline.set_env?
+    review_app.update!(current_size: DynoSize.find_by(name: new_size))
+  end
 
   def formation_update_client(pipeline)
     heroku_client = PlatformAPI.connect_oauth(pipeline.api_key)

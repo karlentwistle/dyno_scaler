@@ -16,9 +16,14 @@ class AddLogdrainJob
 
     review_apps.each do |review_app_params|
       review_app = find_or_create_review_app(pipeline, review_app_params)
-      drain_urls = heroku_log_drain.list(review_app.app_id).pluck('url')
 
-      heroku_log_drain.create(review_app.app_id, url: review_app.logs_url) if drain_urls.exclude?(review_app.logs_url)
+      drain_urls = HandleMissingHerokuAppService.new(review_app.id).call do
+        heroku_log_drain.list(review_app.app_id).pluck('url')
+      end
+
+      next unless drain_urls.success? && drain_urls.message.exclude?(review_app.logs_url)
+
+      heroku_log_drain.create(review_app.app_id, url: review_app.logs_url)
     end
   end
 

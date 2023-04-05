@@ -38,6 +38,22 @@ RSpec.describe AddLogdrainJob, type: :job do
     expect(a_request(:post, 'https://api.heroku.com/apps/[^/]+/log-drains')).not_to have_been_made
   end
 
+  it 'enqueues an extinction check for the review app if Heroku responds with a 404' do
+    pipeline = create(:pipeline, uuid: 'pipeline_uuid', api_key: 'pipeline_api_key')
+    review_app_a = create(:review_app, pipeline:, app_id: 'b756ff11-cca0-4079-a26f-ddc4c58ffd2b')
+    review_app_b = create(:review_app, pipeline:, app_id: 'a11a232d-5606-4eeb-956f-bbbf63977380')
+
+    stub_pipeline_response
+    stub_request(
+      :get, 'https://api.heroku.com/apps/b756ff11-cca0-4079-a26f-ddc4c58ffd2b/log-drains'
+    ).to_return(status: 404)
+    stub_log_drains_list('a11a232d-5606-4eeb-956f-bbbf63977380', review_app_b.logs_url)
+
+    described_class.new.perform(pipeline.id)
+
+    expect(JurassicDynoExtinctionCheckJob.jobs.pluck('args')).to contain_exactly([review_app_a.id])
+  end
+
   def stub_pipeline_response
     stub_request(:get, 'https://api.heroku.com/pipelines/pipeline_uuid/review-apps')
       .with(
