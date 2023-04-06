@@ -29,8 +29,8 @@ class AddLogdrainJob
       .new(pipeline.platform_api)
       .list(pipeline.uuid)
       .to_h do |params|
-      [params['app']['id'], params.slice('branch', 'pr_number')]
-    end
+        [params['app']['id'], params.slice('branch', 'pr_number')]
+      end
   end
 
   def batch_attach_log_drain(*review_apps)
