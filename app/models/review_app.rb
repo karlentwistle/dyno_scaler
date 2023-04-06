@@ -31,6 +31,10 @@ class ReviewApp < ApplicationRecord
     find_by(log_token: given_log_token)
   end
 
+  def platform_api_key
+    pipeline.platform_api
+  end
+
   def request_received
     update_column(:last_active_at, DateTime.now)
 
