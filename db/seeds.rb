@@ -33,9 +33,12 @@ def review_app_attributes(pipeline)
   }
 end
 
+organisation = Organisation.create!(name: 'Default', hosted_domain: 'example.org')
+
 admin = User.create!(
   email: 'admin@example.org',
   password: '12345678',
+  organisation:,
   admin: true
 )
 

@@ -6,9 +6,6 @@ class NewUserForm
   attr_accessor :email, :password, :organisation_name, :remember_token
 
   def save
-    organisation = Organisation.new(name: organisation_name)
-    user = organisation.users.new(email:, password:)
-
     if [user, organisation].map(&:valid?).all? # evaluate validity of both models non lazily
       ActiveRecord::Base.transaction do
         user.save!
@@ -22,5 +19,26 @@ class NewUserForm
 
       false
     end
+  end
+
+  private
+
+  def organisation
+    @organisation ||= initialize_organisation
+  end
+
+  def initialize_organisation
+    Organisation.new(
+      name: organisation_name,
+      hosted_domain: extract_organisation_hosted_domain_from_email
+    )
+  end
+
+  def extract_organisation_hosted_domain_from_email
+    Mail::Address.new(email).domain
+  end
+
+  def user
+    @user ||= organisation.users.new(email:, password:)
   end
 end

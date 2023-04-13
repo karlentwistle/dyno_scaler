@@ -2,7 +2,18 @@
 
 class OauthSessionsController < ApplicationController
   def create
-    user_info = request.env['omniauth.auth']
-    raise user_info # Your own session management should be placed here.
+    sign_in user
+
+    redirect_to root_path
+  end
+
+  private
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
+
+  def user
+    @user ||= User.find_or_create_from_auth_hash(auth_hash)
   end
 end
