@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider(
-    :google_oauth2,
-    ENV.fetch('GOOGLE_CLIENT_ID'),
-    ENV.fetch('GOOGLE_CLIENT_SECRET'),
-    {
-      scope: 'email,profile,userinfo.profile'
-    }
-  )
+  if Rails.application.config.x.google_oauth[:enabled?]
+    provider(
+      :google_oauth2,
+      Rails.application.config.x.google_oauth[:client_id],
+      Rails.application.config.x.google_oauth[:client_secret],
+      {
+        scope: 'email,profile,userinfo.profile'
+      }
+    )
+  end
 end

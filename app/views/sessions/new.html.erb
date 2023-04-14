@@ -2,7 +2,9 @@
   <div class="text-center my-8"><%= header t(".title") %></div>
   <div class="mx-auto max-w-md"><%= render partial: '/sessions/form' %></div>
 
-  <%= form_tag('/auth/google_oauth2', method: 'post', data: {turbo: false}) do %>
-    <button type='submit'>Login with Google</button>
+  <% if google_auth_enabled? %>
+    <%= form_tag('/auth/google_oauth2', method: 'post', data: {turbo: false}) do %>
+      <button type='submit'>Login with Google</button>
+    <% end %>
   <% end %>
 </div>
