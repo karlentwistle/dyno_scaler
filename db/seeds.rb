@@ -9,14 +9,14 @@ def generate_branch_name
   "#{Faker::Lorem.words(number: rand(1..10)).map(&:downcase).join('-')}-#{Faker::Number.number(digits: 5)}"
 end
 
-def pipeline_attributes(user)
+def pipeline_attributes(organisation)
   {
     uuid: Faker::Internet.uuid,
     api_key: Faker::Internet.uuid,
     base_size: DynoSize.base_sizes.sample,
     boost_size: DynoSize.boost_sizes.sample,
     name: Faker::App.name,
-    user:
+    organisation:
   }
 end
 
@@ -35,7 +35,7 @@ end
 
 organisation = Organisation.create!(name: 'Default', hosted_domain: 'example.org')
 
-admin = User.create!(
+User.create!(
   email: 'admin@example.org',
   password: '12345678',
   organisation:,
@@ -43,7 +43,7 @@ admin = User.create!(
 )
 
 pipelines = Pipeline.create!(
-  Array.new(PIPELINE_COUNT) { pipeline_attributes(admin) }
+  Array.new(PIPELINE_COUNT) { pipeline_attributes(organisation) }
 )
 
 pipelines.each do |pipeline|

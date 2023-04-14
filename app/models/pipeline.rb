@@ -14,7 +14,7 @@ class Pipeline < ApplicationRecord
   validates :name, presence: true
 
   has_many :review_apps, dependent: :destroy
-  belongs_to :user
+  belongs_to :organisation
 
   before_validation :fetch_pipeline_info
 

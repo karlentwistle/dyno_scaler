@@ -4,24 +4,24 @@ class PipelinesController < ApplicationController
   before_action :require_login
 
   def index
-    @pipelines = current_user.pipelines.all
+    @pipelines = current_organization.pipelines.all
   end
 
   def show
-    @pipeline = current_user.pipelines.find(params[:id])
+    @pipeline = current_organization.pipelines.find(params[:id])
     @review_apps = @pipeline.review_apps.recent_first
   end
 
   def new
-    @pipeline = current_user.pipelines.new
+    @pipeline = current_organization.pipelines.new
   end
 
   def edit
-    @pipeline = current_user.pipelines.find(params[:id])
+    @pipeline = current_organization.pipelines.find(params[:id])
   end
 
   def create
-    @pipeline = current_user.pipelines.new(create_pipeline_params)
+    @pipeline = current_organization.pipelines.new(create_pipeline_params)
 
     if @pipeline.save
       AddLogdrainJob.perform_async(@pipeline.id)
@@ -33,7 +33,7 @@ class PipelinesController < ApplicationController
   end
 
   def update
-    @pipeline = current_user.pipelines.find(params[:id])
+    @pipeline = current_organization.pipelines.find(params[:id])
 
     if @pipeline.update(update_pipeline_params)
       redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully updated.'
@@ -43,7 +43,7 @@ class PipelinesController < ApplicationController
   end
 
   def destroy
-    @pipeline = current_user.pipelines.find(params[:id])
+    @pipeline = current_organization.pipelines.find(params[:id])
     @pipeline.destroy
 
     redirect_to pipelines_url, notice: 'Pipeline was successfully destroyed.'

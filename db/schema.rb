@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_212026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,7 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
   end
 
   create_table "pipelines", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "uuid", null: false
     t.string "api_key", null: false
     t.integer "base_size_id", null: false
@@ -31,7 +30,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "set_env", default: false, null: false
-    t.index ["user_id"], name: "index_pipelines_on_user_id"
+    t.bigint "organisation_id", null: false
+    t.index ["organisation_id"], name: "index_pipelines_on_organisation_id"
   end
 
   create_table "review_apps", force: :cascade do |t|
@@ -66,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
-  add_foreign_key "pipelines", "users"
+  add_foreign_key "pipelines", "organisations"
   add_foreign_key "review_apps", "pipelines"
   add_foreign_key "users", "organisations"
 end

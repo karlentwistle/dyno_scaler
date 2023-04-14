@@ -5,4 +5,5 @@ class Organisation < ApplicationRecord
   validates :hosted_domain, presence: true
 
   has_many :users, dependent: :destroy
+  has_many :pipelines, dependent: :destroy
 end

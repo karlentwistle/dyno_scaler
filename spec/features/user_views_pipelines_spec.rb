@@ -3,35 +3,35 @@
 require 'rails_helper'
 
 describe 'User views pipeline' do
-  it 'shows only their pipelines' do
-    owner, another_user = create_list(:user, 2)
-    create(:pipeline, user: owner, uuid: 'c961ec04-c764-11ed-afa1-0242ac120002')
-    create(:pipeline, user: another_user, uuid: 'dde075f6-c764-11ed-afa1-0242ac120002')
+  it 'shows only their organisations pipelines' do
+    owned_pipeline = create(:pipeline, uuid: 'c961ec04-c764-11ed-afa1-0242ac120002')
+    _another_pipeline = create(:pipeline, uuid: 'dde075f6-c764-11ed-afa1-0242ac120002')
+    user = create(:user, organisation: owned_pipeline.organisation)
 
-    visit pipelines_path(as: owner)
+    visit pipelines_path(as: user)
 
     expect(page).to have_text 'c961ec04-c764-11ed-afa1-0242ac120002'
     expect(page).not_to have_text 'dde075f6-c764-11ed-afa1-0242ac120002'
   end
 
   it 'shows a list of review apps associated with the pipeline ordered by last_active_at' do
-    owner = create(:user)
-    pipeline = create(:pipeline, user: owner)
+    pipeline = create(:pipeline)
+    user = create(:user, organisation: pipeline.organisation)
     create(:review_app, pipeline:, branch: 'Delta', last_active_at: 1.year.ago)
     create(:review_app, pipeline:, branch: 'Charlie', last_active_at: 1.week.ago)
     create(:review_app, pipeline:, branch: 'Bravo', last_active_at: 1.day.ago)
     create(:review_app, pipeline:, branch: 'Alpha', last_active_at: nil)
 
-    visit pipeline_path(pipeline, as: owner)
+    visit pipeline_path(pipeline, as: user)
 
     expect(page).to have_content(/Alpha.*Bravo.*Charlie.*Delta/)
   end
 
   it 'allows the user to destroy the pipeline' do
-    owner = create(:user)
-    pipeline = create(:pipeline, user: owner, uuid: 'c961ec04-c764-11ed-afa1-0242ac120002')
+    pipeline = create(:pipeline, uuid: 'c961ec04-c764-11ed-afa1-0242ac120002')
+    user = create(:user, organisation: pipeline.organisation)
 
-    visit pipeline_path(pipeline, as: owner)
+    visit pipeline_path(pipeline, as: user)
     click_on 'Destroy this pipeline'
 
     expect(page).to have_content('Pipeline was successfully destroyed.')
