@@ -1,0 +1,8 @@
+<%= form_tag('/auth/google_oauth2', method: 'post', data: {turbo: false}) do %>
+  <button type="submit" class="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0">
+    <span class="sr-only">Sign in with Google</span>
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M17.171 7.368H16.5v.003H9v3.296h4.71A4.998 4.998 0 0 1 4 9a5 5 0 0 1 5-5c1.274 0 2.434.48 3.317 1.266l2.357-2.357A8.295 8.295 0 0 0 9 .667a8.334 8.334 0 1 0 8.171 6.7Z"></path><path fill="#FF3D00" d="M1.627 5.121 4.365 7.13A4.998 4.998 0 0 1 9 4c1.274 0 2.434.48 3.317 1.266l2.357-2.357A8.295 8.295 0 0 0 9 .667 8.329 8.329 0 0 0 1.627 5.12Z"></path><path fill="#4CAF50" d="M9 17.333a8.294 8.294 0 0 0 5.587-2.163l-2.58-2.182A4.962 4.962 0 0 1 9 14a4.998 4.998 0 0 1-4.701-3.31L1.58 12.782A8.327 8.327 0 0 0 9 17.333Z"></path><path fill="#1976D2" d="M17.171 7.368 9 7.37v3.296h4.71a5.017 5.017 0 0 1-1.703 2.32l2.58 2.183c-.182.165 2.746-2.003 2.746-6.17 0-.559-.057-1.104-.162-1.632Z" />
+    </svg>
+  </a>
+<% end %>

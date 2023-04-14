@@ -1,10 +1,17 @@
 <div class="md:my-12 mx-auto w-full lg:w-1/2 bg-gray-800 p-12 rounded-lg shadow-lg">
   <div class="text-center my-8"><%= header t(".title") %></div>
-  <div class="mx-auto max-w-md"><%= render partial: '/sessions/form' %></div>
+  <div class="mx-auto max-w-md"><%= render partial: '/sessions/form' %>
 
   <% if google_auth_enabled? %>
-    <%= form_tag('/auth/google_oauth2', method: 'post', data: {turbo: false}) do %>
-      <button type='submit'>Login with Google</button>
-    <% end %>
+    <div class="inline-flex items-center justify-center w-full">
+      <hr class="w-full h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+      <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-800">
+        Or continue with
+      </span>
+    </div>
+
+    <div class="mt-4">
+      <%= render partial: '/sessions/google_auth' %>
+    </div>
   <% end %>
 </div>

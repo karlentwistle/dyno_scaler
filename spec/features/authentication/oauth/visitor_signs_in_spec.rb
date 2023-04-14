@@ -9,7 +9,7 @@ RSpec.describe 'Visitor signs up via oauth' do
     mock_valid_google_oauth(hd: 'example.org', email: 'bob@example.org')
 
     visit sign_in_path
-    click_button 'Login with Google'
+    click_button 'Sign in with Google'
 
     expect_user_to_be_signed_in
   end
