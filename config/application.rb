@@ -30,5 +30,11 @@ module Dynoscaler
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.x.log_drain.hostname = ENV.fetch('LOG_DRAIN_HOSTNAME')
+
+    config.x.google_oauth = {
+      enabled?: ENV['GOOGLE_CLIENT_ID'].present? && ENV['GOOGLE_CLIENT_SECRET'].present?,
+      client_id: ENV.fetch('GOOGLE_CLIENT_ID', nil),
+      client_secret: ENV.fetch('GOOGLE_CLIENT_SECRET', nil)
+    }
   end
 end

@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_15_194149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "organisations", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "hosted_domain", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hosted_domain"], name: "index_organisations_on_hosted_domain", unique: true
+  end
+
   create_table "pipelines", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "uuid", null: false
     t.string "api_key", null: false
     t.integer "base_size_id", null: false
@@ -24,7 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "set_env", default: false, null: false
-    t.index ["user_id"], name: "index_pipelines_on_user_id"
+    t.bigint "organisation_id", null: false
+    t.index ["organisation_id"], name: "index_pipelines_on_organisation_id"
   end
 
   create_table "review_apps", force: :cascade do |t|
@@ -44,6 +52,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.index ["pipeline_id"], name: "index_review_apps_on_pipeline_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,11 +70,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_200431) do
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
     t.boolean "admin", default: false, null: false
+    t.bigint "organisation_id", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
-  add_foreign_key "pipelines", "users"
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
+  add_foreign_key "pipelines", "organisations"
   add_foreign_key "review_apps", "pipelines"
+  add_foreign_key "users", "organisations"
 end

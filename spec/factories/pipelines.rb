@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :pipeline do
-    user
+    organisation
     name { Faker::App.name }
     uuid { Faker::Internet.uuid }
     api_key { Faker::Internet.uuid }

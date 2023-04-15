@@ -1,9 +1,14 @@
-<div class="text-field">
-  <%= form.label :email %>
-  <%= form.email_field :email %>
+<div class="mb-6">
+  <%= form.label :organisation_name, class: label_class %>
+  <%= form.text_field :organisation_name, class: field_class, required: true %>
 </div>
 
-<div class="password-field">
-  <%= form.label :password %>
-  <%= form.password_field :password %>
+<div class="mb-6">
+  <%= form.label :email, class: label_class %>
+  <%= form.email_field :email, class: field_class, required: true %>
+</div>
+
+<div class="mb-6">
+  <%= form.label :password, class: label_class %>
+  <%= form.password_field :password, class: field_class, required: true %>
 </div>

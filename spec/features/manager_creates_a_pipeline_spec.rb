@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-describe 'User creates a pipeline' do
+describe 'Manager creates a pipeline' do
   it 'persists the changes and display a flash success banner' do
-    visit new_pipeline_path(as: create(:user))
+    visit new_pipeline_path(as: create(:user, :manager))
 
     create_pipeline(name: 'My Pipeline')
 
@@ -18,7 +18,7 @@ describe 'User creates a pipeline' do
   end
 
   it 'enqueue a job to attach the log drain to each review app' do
-    visit new_pipeline_path(as: create(:user))
+    visit new_pipeline_path(as: create(:user, :manager))
 
     expect { create_pipeline }.to change(AddLogdrainJob.jobs, :size).from(0).to(1)
   end
@@ -26,7 +26,8 @@ describe 'User creates a pipeline' do
   it 'display an error if the UUID is invalid' do
     stub_request(:get, 'https://api.heroku.com/pipelines/invalid-uuid').to_return(status: 404)
 
-    visit new_pipeline_path(as: create(:user))
+    visit new_pipeline_path(as: create(:user, :manager))
+    fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
     fill_in 'UUID', with: 'invalid-uuid'
     click_button 'Create Pipeline'
 
@@ -36,7 +37,7 @@ describe 'User creates a pipeline' do
   it 'display an error if the API key is invalid' do
     stub_request(:get, 'https://api.heroku.com/pipelines/462c0eac-7680-4682-bf01-f1748d5f6919').to_return(status: 401)
 
-    visit new_pipeline_path(as: create(:user))
+    visit new_pipeline_path(as: create(:user, :manager))
     fill_in 'API key', with: 'invalid-api-key'
     fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'
     click_button 'Create Pipeline'

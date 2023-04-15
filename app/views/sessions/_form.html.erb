@@ -1,11 +1,11 @@
 <%= form_for :session, url: session_path do |form| %>
   <div class="mb-6">
     <%= form.label :email, class: label_class %>
-    <%= form.email_field :email, class: field_class %>
+    <%= form.email_field :email, class: field_class, required: true %>
   </div>
   <div class="mb-6">
     <%= form.label :password, class: label_class %>
-    <%= form.password_field :password, class: field_class %>
+    <%= form.password_field :password, class: field_class, required: true %>
   </div>
   <div class="text-center">
     <%= form.submit class: blue_button_class("min-w-full") %>

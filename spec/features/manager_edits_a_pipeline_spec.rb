@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'User edits a pipeline' do
+describe 'Manager edits a pipeline' do
   it 'persists the changes and display a flash success banner' do
     pipeline = create(
       :pipeline,
@@ -11,8 +11,9 @@ describe 'User edits a pipeline' do
       boost_size: DynoSize.basic,
       set_env: true
     )
+    user = create(:user, :manager, organisation: pipeline.organisation)
 
-    visit pipeline_path(pipeline, as: pipeline.user)
+    visit pipeline_path(pipeline, as: user)
     click_on 'Edit'
 
     select 'Basic', from: 'Base dyno type'
@@ -30,8 +31,9 @@ describe 'User edits a pipeline' do
 
   it 'disables editing of the uuid' do
     pipeline = create(:pipeline, name: 'My Pipeline', base_size: DynoSize.eco, boost_size: DynoSize.basic)
+    user = create(:user, :manager, organisation: pipeline.organisation)
 
-    visit edit_pipeline_path(pipeline, as: pipeline.user)
+    visit edit_pipeline_path(pipeline, as: user)
 
     expect(page).to have_field('UUID', disabled: true)
   end
