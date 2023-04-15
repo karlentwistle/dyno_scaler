@@ -42,6 +42,20 @@ User.create!(
   admin: true
 )
 
+User.create!(
+  email: 'manager@example.org',
+  password: '12345678',
+  organisation:
+).tap do |user|
+  user.add_role :manager, organisation
+end
+
+User.create!(
+  email: 'viewer@example.org',
+  password: '12345678',
+  organisation:
+)
+
 pipelines = Pipeline.create!(
   Array.new(PIPELINE_COUNT) { pipeline_attributes(organisation) }
 )

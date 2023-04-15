@@ -2,27 +2,27 @@
 
 class PipelinesController < ApplicationController
   before_action :require_login
-  before_action :ensure_user_is_a_manager_of_organization, only: %i[edit create update destroy]
+  before_action :ensure_user_is_a_manager_of_organization, only: %i[new edit create update destroy]
 
   def index
-    @pipelines = current_organization.pipelines.all
+    @pipelines = current_organisation.pipelines.all
   end
 
   def show
-    @pipeline = current_organization.pipelines.find(params[:id])
+    @pipeline = current_organisation.pipelines.find(params[:id])
     @review_apps = @pipeline.review_apps.recent_first
   end
 
   def new
-    @pipeline = current_organization.pipelines.new
+    @pipeline = current_organisation.pipelines.new
   end
 
   def edit
-    @pipeline = current_organization.pipelines.find(params[:id])
+    @pipeline = current_organisation.pipelines.find(params[:id])
   end
 
   def create
-    @pipeline = current_organization.pipelines.new(create_pipeline_params)
+    @pipeline = current_organisation.pipelines.new(create_pipeline_params)
 
     if @pipeline.save
       AddLogdrainJob.perform_async(@pipeline.id)
@@ -34,7 +34,7 @@ class PipelinesController < ApplicationController
   end
 
   def update
-    @pipeline = current_organization.pipelines.find(params[:id])
+    @pipeline = current_organisation.pipelines.find(params[:id])
 
     if @pipeline.update(update_pipeline_params)
       redirect_to pipeline_url(@pipeline), notice: 'Pipeline was successfully updated.'
@@ -44,7 +44,7 @@ class PipelinesController < ApplicationController
   end
 
   def destroy
-    @pipeline = current_organization.pipelines.find(params[:id])
+    @pipeline = current_organisation.pipelines.find(params[:id])
     @pipeline.destroy
 
     redirect_to pipelines_url, notice: 'Pipeline was successfully destroyed.'
@@ -61,7 +61,7 @@ class PipelinesController < ApplicationController
   end
 
   def ensure_user_is_a_manager_of_organization
-    return if current_user.has_role?(:manager, current_organization)
+    return if current_user.has_role?(:manager, current_organisation)
 
     redirect_to root_url, alert: 'You are not authorized to access this page.'
   end

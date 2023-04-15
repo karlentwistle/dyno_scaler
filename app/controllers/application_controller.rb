@@ -3,7 +3,11 @@
 class ApplicationController < ActionController::Base
   include Clearance::Controller
 
-  def current_organization
-    @current_organization ||= current_user.organisation
+  private
+
+  def current_organisation
+    @current_organisation ||= current_user.organisation
   end
+
+  helper_method :current_organisation
 end
