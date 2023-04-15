@@ -16,4 +16,10 @@ FactoryBot.define do
       user.add_role :manager, user.organisation
     end
   end
+
+  trait :viewer do
+    after(:create) do |user|
+      user.add_role :viewer, user.organisation
+    end
+  end
 end

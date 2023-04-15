@@ -27,6 +27,8 @@ class Pipeline < ApplicationRecord
   private
 
   def fetch_pipeline_info
+    return if uuid.blank? || api_key.blank?
+
     self.name ||= PlatformAPI::Pipeline.new(platform_api).info(uuid).fetch('name')
   rescue Excon::Error::Unauthorized
     errors.add(:api_key, 'is invalid')

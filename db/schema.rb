@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_194149) do
     t.string "hosted_domain", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["hosted_domain"], name: "index_organisations_on_hosted_domain", unique: true
   end
 
   create_table "pipelines", force: :cascade do |t|

@@ -63,6 +63,6 @@ class PipelinesController < ApplicationController
   def ensure_user_is_a_manager_of_organization
     return if current_user.has_role?(:manager, current_organisation)
 
-    redirect_to root_url, alert: 'You are not authorized to access this page.'
+    head :forbidden
   end
 end

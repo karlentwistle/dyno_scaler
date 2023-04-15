@@ -27,6 +27,7 @@ describe 'Manager creates a pipeline' do
     stub_request(:get, 'https://api.heroku.com/pipelines/invalid-uuid').to_return(status: 404)
 
     visit new_pipeline_path(as: create(:user, :manager))
+    fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
     fill_in 'UUID', with: 'invalid-uuid'
     click_button 'Create Pipeline'
 
