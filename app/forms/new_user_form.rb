@@ -10,6 +10,7 @@ class NewUserForm
       ActiveRecord::Base.transaction do
         user.save!
         organisation.save!
+        user.add_role :manager, organisation
       end
 
       user

@@ -10,4 +10,10 @@ FactoryBot.define do
     email
     password { 'password' }
   end
+
+  trait :manager do
+    after(:create) do |user|
+      user.add_role :manager, user.organisation
+    end
+  end
 end

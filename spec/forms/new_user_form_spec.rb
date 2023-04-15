@@ -21,6 +21,12 @@ RSpec.describe NewUserForm do
         expect { form.save }.to change(Organisation, :count).by(1)
       end
 
+      it 'assigns the user as the organisation manager' do
+        user = form.save
+
+        expect(user.has_role?(:manager, user.organisation)).to be true
+      end
+
       it 'returns true' do
         expect(form.save).to be_truthy
       end

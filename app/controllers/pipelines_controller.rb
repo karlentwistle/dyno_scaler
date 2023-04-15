@@ -2,6 +2,7 @@
 
 class PipelinesController < ApplicationController
   before_action :require_login
+  before_action :ensure_user_is_a_manager_of_organization, only: %i[edit create update destroy]
 
   def index
     @pipelines = current_organization.pipelines.all
@@ -57,5 +58,11 @@ class PipelinesController < ApplicationController
 
   def update_pipeline_params
     create_pipeline_params.slice(:api_key, :base_size_id, :boost_size_id, :set_env)
+  end
+
+  def ensure_user_is_a_manager_of_organization
+    return if current_user.has_role?(:manager, current_organization)
+
+    redirect_to root_url, alert: 'You are not authorized to access this page.'
   end
 end

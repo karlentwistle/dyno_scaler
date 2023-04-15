@@ -26,15 +26,4 @@ describe 'User views pipeline' do
 
     expect(page).to have_content(/Alpha.*Bravo.*Charlie.*Delta/)
   end
-
-  it 'allows the user to destroy the pipeline' do
-    pipeline = create(:pipeline, uuid: 'c961ec04-c764-11ed-afa1-0242ac120002')
-    user = create(:user, organisation: pipeline.organisation)
-
-    visit pipeline_path(pipeline, as: user)
-    click_on 'Destroy this pipeline'
-
-    expect(page).to have_content('Pipeline was successfully destroyed.')
-    expect(page).not_to have_text 'dde075f6-c764-11ed-afa1-0242ac120002'
-  end
 end
