@@ -13,7 +13,8 @@ class AddOrganisationToUsers < ActiveRecord::Migration[7.0]
     add_reference :users, :organisation, foreign_key: true
 
     LocalUser.find_each do |user|
-      organisation = LocalOrganisation.find_or_create_by(name: 'Default')
+      hosted_domain = Mail::Address.new(user.email).domain
+      organisation = LocalOrganisation.find_or_create_by(name: 'Default', hosted_domain:)
       user.update!(organisation_id: organisation.id)
     end
 
