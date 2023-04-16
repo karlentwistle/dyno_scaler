@@ -34,7 +34,7 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: postgres
         run: |
-          bundle exec rake test:prepare
+          bundle exec rake db:test:prepare
 
       - name: Run test suite
         env:
