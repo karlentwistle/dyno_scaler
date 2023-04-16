@@ -1,0 +1,53 @@
+name: RSpec
+on: [push]
+
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.6.0
+
+      - name: Run database setup
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: |
+          bundle exec rake db:test:prepare
+
+      - name: Assets setup
+        env:
+          RAILS_ENV: test
+        run: |
+          npm install
+          bundle exec rake tailwindcss:build
+
+      - name: Run test suite
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: |
+          bundle exec rspec
