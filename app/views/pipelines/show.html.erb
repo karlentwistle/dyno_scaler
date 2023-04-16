@@ -40,11 +40,9 @@
 
 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
-<div class="h-px">
   <%= link_to("Back to pipelines", pipelines_path, class: blue_button_class) %>
 
   <% if current_user.has_role?(:manager, current_organisation) %>
     <%= link_to("Edit", edit_pipeline_path(@pipeline), class: blue_button_class) %>
     <%= button_to("Destroy this pipeline" , @pipeline, method: :delete, class: red_button_class, form_class: 'inline') %>
   <% end %>
-</div>
