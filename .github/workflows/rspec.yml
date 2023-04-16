@@ -37,6 +37,8 @@ jobs:
           bundle exec rake db:test:prepare
 
       - name: Assets setup
+        env:
+          RAILS_ENV: test
         run: |
           npm install
           bundle exec rake tailwindcss:build
