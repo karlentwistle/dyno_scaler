@@ -107,6 +107,12 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+
+  # Patch-level verification for bundler.
+  gem 'bundler-audit'
+
+  # A static analysis security vulnerability scanner for Ruby on Rails applications.
+  gem 'brakeman'
 end
 
 group :test do
