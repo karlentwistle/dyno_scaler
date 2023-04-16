@@ -19,6 +19,8 @@ jobs:
         uses: actions/setup-node@v3.6.0
 
       - name: Run database setup
+        env:
+          RAILS_ENV: test
         run: |
           bundle exec rake db:create
           bundle exec rake db:migrate
