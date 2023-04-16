@@ -1,0 +1,22 @@
+name: Rubocop
+on: [push]
+
+jobs:
+  linters:
+    name: Linters
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.6.0
+
+      - name: Run linters
+        run: |
+          bin/rubocop --parallel
