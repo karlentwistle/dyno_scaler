@@ -54,6 +54,8 @@ RSpec.describe AddLogdrainJob, type: :job do
     expect(JurassicDynoExtinctionCheckJob.jobs.pluck('args')).to contain_exactly([review_app_a.id])
   end
 
+  private
+
   def stub_pipeline_response
     stub_request(:get, 'https://api.heroku.com/pipelines/pipeline_uuid/review-apps')
       .with(
