@@ -2,6 +2,9 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["toggle"];
+  static values = {
+    intervalMilliseconds: Number
+  }
 
   connect() {
     this.startPolling();
@@ -15,7 +18,7 @@ export default class extends Controller {
     this.polling = true;
     this.refreshInterval = setInterval(() => {
       this.refresh();
-    }, 10000); // Poll every 10 seconds
+    }, this.intervalMillisecondsValue);
   }
 
   stopPolling() {

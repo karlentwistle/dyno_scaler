@@ -3,7 +3,13 @@
   <%= subheader(@pipeline.name) %>
 </div>
 
-<div data-controller="live-polling">
+<%= content_tag(
+  :div,
+  data: {
+    controller: 'live-polling',
+    live_polling_interval_milliseconds_value: polling_interval_milliseconds
+  }
+) do %>
   <button data-action="click->live-polling#togglePolling" data-hello-target="toggle">
     Greet
   </button>
@@ -11,7 +17,7 @@
   <div class="shadow-md sm:rounded-lg" id="<%= dom_id @pipeline %>">
     <%= render partial: "pipelines/review_apps", locals: {review_apps: @review_apps} %>
   </div>
-</div>
+<% end %>
 
 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 

@@ -38,9 +38,7 @@ describe 'User views pipeline' do
     review_app.request_received
     create(:review_app, pipeline:, branch: 'Bravo', last_active_at: nil)
 
-    using_wait_time 15 do
-      expect(page).to have_content(/Alpha.*less than a minute ago/)
-      expect(page).to have_content(/Bravo.*Unknown/)
-    end
+    expect(page).to have_content(/Alpha.*less than a minute ago/)
+    expect(page).to have_content(/Bravo.*Unknown/)
   end
 end
