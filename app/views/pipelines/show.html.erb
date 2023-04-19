@@ -3,39 +3,14 @@
   <%= subheader(@pipeline.name) %>
 </div>
 
-<div class="shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">
-          Branch
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Dyno Size
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Last Active At
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @review_apps.each do |review_app| %>
-        <% klass=cycle("bg-white border-b dark:bg-gray-900
-            dark:border-gray-700", "border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700" ) %>
-        <%= content_tag(:tr, class: klass) do %>
-          <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white break-all">
-            <%= review_app.branch %>
-          </td>
-          <td class="px-6 py-4">
-            <%= review_app.current_size_name || 'Unknown' %>
-          </td>
-          <td class="px-6 py-4">
-            <%= time_ago_in_words(review_app.last_active_at) %> ago
-          </td>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
+<div data-controller="live-polling">
+  <button data-action="click->live-polling#togglePolling" data-hello-target="toggle">
+    Greet
+  </button>
+
+  <div class="shadow-md sm:rounded-lg" id="<%= dom_id @pipeline %>">
+    <%= render partial: "pipelines/review_apps", locals: {review_apps: @review_apps} %>
+  </div>
 </div>
 
 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">

@@ -26,4 +26,21 @@ describe 'User views pipeline' do
 
     expect(page).to have_content(/Alpha.*Bravo.*Charlie.*Delta/)
   end
+
+  it 'automatically refreshes the review apps list', js: true do
+    pipeline = create(:pipeline)
+    user = create(:user, organisation: pipeline.organisation)
+    review_app = create(:review_app, pipeline:, branch: 'Alpha', last_active_at: 1.day.ago)
+
+    visit pipeline_path(pipeline, as: user)
+    expect(page).to have_content(/Alpha.*1 day ago/)
+
+    review_app.request_received
+    create(:review_app, pipeline:, branch: 'Bravo', last_active_at: nil)
+
+    using_wait_time 15 do
+      expect(page).to have_content(/Alpha.*less than a minute ago/)
+      expect(page).to have_content(/Bravo.*Unknown/)
+    end
+  end
 end

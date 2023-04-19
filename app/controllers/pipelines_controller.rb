@@ -11,6 +11,17 @@ class PipelinesController < ApplicationController
   def show
     @pipeline = current_organisation.pipelines.find(params[:id])
     @review_apps = @pipeline.review_apps.recent_first
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          @pipeline,
+          partial: 'pipelines/review_apps',
+          locals: { review_apps: @review_apps }
+        )
+      end
+    end
   end
 
   def new
