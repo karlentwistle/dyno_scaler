@@ -63,4 +63,6 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   config.middleware.use Clearance::BackDoor
+
+  config.x.polling_interval_seconds = 0.05
 end

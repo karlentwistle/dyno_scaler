@@ -36,5 +36,7 @@ module Dynoscaler
       client_id: ENV.fetch('GOOGLE_CLIENT_ID', nil),
       client_secret: ENV.fetch('GOOGLE_CLIENT_SECRET', nil)
     }
+
+    config.x.polling_interval_seconds = ENV.fetch('POLLING_INTERVAL_SECONDS', 10).to_i
   end
 end

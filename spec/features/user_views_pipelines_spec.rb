@@ -26,4 +26,32 @@ describe 'User views pipeline' do
 
     expect(page).to have_content(/Alpha.*Bravo.*Charlie.*Delta/)
   end
+
+  it 'automatically refreshes the review apps list', js: true do
+    pipeline = create(:pipeline)
+    user = create(:user, organisation: pipeline.organisation)
+    review_app = create(:review_app, pipeline:, branch: 'Alpha', last_active_at: 1.day.ago)
+
+    visit pipeline_path(pipeline, as: user)
+    expect(page).to have_content(/Alpha.*1 day ago/)
+
+    review_app.request_received
+    create(:review_app, pipeline:, branch: 'Bravo', last_active_at: nil)
+
+    page.driver.wait_for_network_idle
+    expect(page).to have_content(/Alpha.*less than a minute ago/)
+    expect(page).to have_content(/Bravo.*Unknown/)
+  end
+
+  it 'allows the user to disable automatic refreshes of the review app list', js: true do
+    pipeline = create(:pipeline)
+    user = create(:user, organisation: pipeline.organisation)
+
+    visit pipeline_path(pipeline, as: user)
+    uncheck 'Live Poll', allow_label_click: true
+    create(:review_app, pipeline:, branch: 'ke/annoyed_that_this_uses_sleep')
+
+    sleep Rails.application.config.x.polling_interval_seconds * 1.5
+    expect(page).not_to have_content('ke/annoyed_that_this_uses_sleep')
+  end
 end
