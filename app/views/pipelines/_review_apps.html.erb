@@ -1,4 +1,9 @@
-<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+<%=
+  content_tag(
+    :table,
+    class: 'w-full text-sm text-left text-gray-500 dark:text-gray-400',
+    id: dom_id(@pipeline)
+  ) do %>
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
     <tr>
       <th scope="col" class="px-6 py-3">
@@ -13,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    <% review_apps.each do |review_app| %>
+    <% @pipeline.review_apps.recent_first.each do |review_app| %>
       <% klass=cycle("bg-white border-b dark:bg-gray-900
           dark:border-gray-700", "border-b bg-gray-50 dark:bg-gray-800 dark:border-gray-700" ) %>
       <%= content_tag(:tr, class: klass) do %>
@@ -29,4 +34,4 @@
       <% end %>
     <% end %>
   </tbody>
-</table>
+<% end %>

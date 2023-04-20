@@ -18,9 +18,7 @@
     </label>
   </div>
 
-  <div class="shadow-md sm:rounded-lg" id="<%= dom_id @pipeline %>">
-    <%= render partial: "pipelines/review_apps", locals: {review_apps: @review_apps} %>
-  </div>
+  <%= render partial: "pipelines/review_apps", locals: {pipeline: @pipeline} %>
 <% end %>
 
 <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
