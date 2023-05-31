@@ -9,8 +9,8 @@ class Pipeline < ApplicationRecord
   belongs_to :base_size, class_name: 'DynoSize'
   belongs_to :boost_size, class_name: 'DynoSize'
 
-  validates :base_size, inclusion: { in: DynoSize.base_sizes }
-  validates :boost_size, inclusion: { in: DynoSize.boost_sizes }
+  validates :base_size_id, inclusion: { in: DynoSize.base_sizes.pluck(:id) }
+  validates :boost_size_id, inclusion: { in: DynoSize.boost_sizes.pluck(:id) }
   validates :name, presence: true
 
   has_many :review_apps, dependent: :destroy
