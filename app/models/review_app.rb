@@ -13,8 +13,8 @@ class ReviewApp < ApplicationRecord
 
   validates :app_id, presence: true
   validates :branch, presence: true
-  validates :base_size, inclusion: { in: DynoSize.all }
-  validates :boost_size, inclusion: { in: DynoSize.all }
+  validates :base_size_id, inclusion: { in: DynoSize.pluck(:id) }
+  validates :boost_size_id, inclusion: { in: DynoSize.pluck(:id) }
 
   before_validation :denormalize_dyno_sizes
   before_create :set_last_active_at
