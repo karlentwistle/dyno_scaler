@@ -74,7 +74,7 @@ GEM
       ffi (~> 1.15)
       ffi-compiler (~> 1.0)
     ast (2.4.2)
-    bcrypt (3.1.18)
+    bcrypt (3.1.19)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -404,7 +404,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_hash
-  bcrypt (~> 3.1.7)
+  bcrypt (~> 3.1.19)
   bootsnap
   brakeman
   bundler-audit
