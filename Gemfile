@@ -123,7 +123,5 @@ group :test do
   gem 'webmock'
 end
 
-group :development, :test do
-  gem 'factory_bot_rails'
-  gem 'rspec-rails'
-end
+gem 'factory_bot_rails', groups: %i[development test]
+gem 'rspec-rails', groups: %i[development test]
