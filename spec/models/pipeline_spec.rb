@@ -9,19 +9,19 @@ RSpec.describe Pipeline do
     end
 
     it 'is invalid without a uuid' do
-      expect(build(:pipeline, uuid: nil)).to be_invalid
+      expect(build(:pipeline, uuid: nil)).not_to be_valid
     end
 
     it 'is invalid without a api_key' do
-      expect(build(:pipeline, api_key: nil)).to be_invalid
+      expect(build(:pipeline, api_key: nil)).not_to be_valid
     end
 
     it 'is invalid when largest dyno size is placed in base_size' do
-      expect(build(:pipeline, base_size: DynoSize.largest)).to be_invalid
+      expect(build(:pipeline, base_size: DynoSize.largest)).not_to be_valid
     end
 
     it 'is invalid when smallest dyno size is placed in boost_size' do
-      expect(build(:pipeline, boost_size: DynoSize.smallest)).to be_invalid
+      expect(build(:pipeline, boost_size: DynoSize.smallest)).not_to be_valid
     end
   end
 

@@ -9,7 +9,7 @@ RSpec.describe ReviewApp do
     end
 
     it 'is invalid without a pipeline' do
-      expect(build(:review_app, pipeline: nil)).to be_invalid
+      expect(build(:review_app, pipeline: nil)).not_to be_valid
     end
   end
 
