@@ -36,7 +36,7 @@ gem 'redis', '~> 5.0'
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-gem 'bcrypt', '~> 3.1.19'
+gem 'bcrypt', '~> 3.1.20'
 
 # Rails authentication with email & password.
 gem 'clearance'
