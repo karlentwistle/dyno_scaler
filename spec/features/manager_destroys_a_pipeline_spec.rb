@@ -8,7 +8,7 @@ describe 'Manager destroy a pipeline' do
     user = create(:user, :manager, organisation: pipeline.organisation)
 
     visit pipeline_path(pipeline, as: user)
-    click_on 'Destroy this pipeline'
+    click_button 'Destroy this pipeline'
 
     expect(page).to have_content('Pipeline was successfully destroyed.')
     expect(page).not_to have_text 'dde075f6-c764-11ed-afa1-0242ac120002'

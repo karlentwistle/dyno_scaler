@@ -11,7 +11,7 @@ describe 'Manager creates a pipeline' do
     expect(page).to have_text 'Pipeline was successfully created'
     expect(page).to have_text 'My Pipeline'
 
-    click_on 'Edit'
+    click_link 'Edit'
     expect(page).to have_select('Base dyno type', selected: 'Basic')
     expect(page).to have_select('Boost dyno type', selected: 'Standard-1X')
     expect(page).to have_checked_field('Set env variable')
