@@ -27,7 +27,7 @@ describe 'User views pipeline' do
     expect(page).to have_content(/Alpha.*Bravo.*Charlie.*Delta/)
   end
 
-  it 'automatically refreshes the review apps list', js: true do
+  it 'automatically refreshes the review apps list', :js do
     pipeline = create(:pipeline)
     user = create(:user, organisation: pipeline.organisation)
     review_app = create(:review_app, pipeline:, branch: 'Alpha', last_active_at: 1.day.ago)
@@ -43,7 +43,7 @@ describe 'User views pipeline' do
     expect(page).to have_content(/Bravo.*Unknown/)
   end
 
-  it 'allows the user to disable automatic refreshes of the review app list', js: true do
+  it 'allows the user to disable automatic refreshes of the review app list', :js do
     pipeline = create(:pipeline)
     user = create(:user, organisation: pipeline.organisation)
 

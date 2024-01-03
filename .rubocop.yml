@@ -1,11 +1,16 @@
 AllCops:
   NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'vendor/bundle/**/*'
 
 require:
   - rubocop-capybara
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-factory_bot
 
 Style/Documentation:
   Enabled: false
