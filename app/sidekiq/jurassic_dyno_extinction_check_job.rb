@@ -14,6 +14,8 @@ class JurassicDynoExtinctionCheckJob
         .get_review_app_by_app_id(review_app.app_id)
     rescue Excon::Error::Forbidden
       review_app.destroy!
+    rescue Excon::Error::Timeout => e
+      raise Errors::RetryWithoutReporting, e.message
     end
   end
 end
