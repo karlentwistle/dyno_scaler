@@ -6,7 +6,7 @@ RSpec.describe 'Visitor signs up' do
   it 'by navigating to the page' do
     visit sign_in_path
 
-    click_link I18n.t('sessions.form.sign_up')
+    click_on I18n.t('sessions.form.sign_up')
 
     expect(page).to have_current_path sign_up_path, ignore_query: true
   end

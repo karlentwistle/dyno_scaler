@@ -8,7 +8,7 @@ RSpec.describe 'Visitor signs up via oauth' do
     mock_valid_google_oauth(hd: 'example.org', email: 'bob@example.org')
 
     visit sign_in_path
-    click_button 'Sign in with Google'
+    click_on 'Sign in with Google'
 
     expect_user_to_be_signed_in
   end
@@ -18,7 +18,7 @@ RSpec.describe 'Visitor signs up via oauth' do
 
     visit sign_in_path
 
-    expect { click_button 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { click_on 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'returns error 404 if hosted domain is unavailable in oauth hash' do
@@ -27,7 +27,7 @@ RSpec.describe 'Visitor signs up via oauth' do
 
     visit sign_in_path
 
-    expect { click_button 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { click_on 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
   end
 
   it 'returns error 404 if email is unavailable in oauth hash' do
@@ -36,6 +36,6 @@ RSpec.describe 'Visitor signs up via oauth' do
 
     visit sign_in_path
 
-    expect { click_button 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
+    expect { click_on 'Sign in with Google' }.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
