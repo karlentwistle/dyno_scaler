@@ -11,7 +11,7 @@ describe 'User views pipeline' do
     visit pipelines_path(as: user)
 
     expect(page).to have_text 'c961ec04-c764-11ed-afa1-0242ac120002'
-    expect(page).not_to have_text 'dde075f6-c764-11ed-afa1-0242ac120002'
+    expect(page).to have_no_text 'dde075f6-c764-11ed-afa1-0242ac120002'
   end
 
   it 'shows a list of review apps associated with the pipeline ordered by last_active_at' do
@@ -52,6 +52,6 @@ describe 'User views pipeline' do
     create(:review_app, pipeline:, branch: 'ke/annoyed_that_this_uses_sleep')
 
     sleep Rails.application.config.x.polling_interval_seconds * 1.5
-    expect(page).not_to have_content('ke/annoyed_that_this_uses_sleep')
+    expect(page).to have_no_content('ke/annoyed_that_this_uses_sleep')
   end
 end
