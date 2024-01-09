@@ -15,7 +15,7 @@ RSpec.describe 'Visitor resets password' do
   it 'by navigating to the page' do
     visit sign_in_path
 
-    click_on I18n.t('sessions.form.forgot_password')
+    click_link I18n.t('sessions.form.forgot_password')
 
     expect(page).to have_current_path new_password_path, ignore_query: true
   end

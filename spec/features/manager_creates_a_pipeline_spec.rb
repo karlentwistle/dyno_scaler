@@ -11,7 +11,7 @@ describe 'Manager creates a pipeline' do
     expect(page).to have_text 'Pipeline was successfully created'
     expect(page).to have_text 'My Pipeline'
 
-    click_on 'Edit'
+    click_link 'Edit'
     expect(page).to have_select('Base dyno type', selected: 'Basic')
     expect(page).to have_select('Boost dyno type', selected: 'Standard-1X')
     expect(page).to have_checked_field('Set env variable')
@@ -29,7 +29,7 @@ describe 'Manager creates a pipeline' do
     visit new_pipeline_path(as: create(:user, :manager))
     fill_in 'API key', with: '75ed542b-271b-44be-99c4-3f282e3f3d8d'
     fill_in 'UUID', with: 'invalid-uuid'
-    click_on 'Create Pipeline'
+    click_button 'Create Pipeline'
 
     expect(page).to have_text 'Uuid is invalid'
   end
@@ -40,7 +40,7 @@ describe 'Manager creates a pipeline' do
     visit new_pipeline_path(as: create(:user, :manager))
     fill_in 'API key', with: 'invalid-api-key'
     fill_in 'UUID', with: '462c0eac-7680-4682-bf01-f1748d5f6919'
-    click_on 'Create Pipeline'
+    click_button 'Create Pipeline'
 
     expect(page).to have_text 'Api key is invalid'
   end
@@ -59,7 +59,7 @@ describe 'Manager creates a pipeline' do
     select 'Standard-1X', from: 'Boost dyno type'
     check 'Set env variable'
 
-    click_on 'Create Pipeline'
+    click_button 'Create Pipeline'
   end
 
   def stub_pipeline_info(uuid:, api_key:, name:)

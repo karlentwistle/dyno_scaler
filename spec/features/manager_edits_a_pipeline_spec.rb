@@ -14,16 +14,16 @@ describe 'Manager edits a pipeline' do
     user = create(:user, :manager, organisation: pipeline.organisation)
 
     visit pipeline_path(pipeline, as: user)
-    click_on 'Edit'
+    click_link 'Edit'
 
     select 'Basic', from: 'Base dyno type'
     select 'Standard-1X', from: 'Boost dyno type'
     uncheck 'Set env variable'
 
-    click_on 'Update Pipeline'
+    click_button 'Update Pipeline'
     expect(page).to have_text 'Pipeline was successfully updated'
 
-    click_on 'Edit'
+    click_link 'Edit'
     expect(page).to have_select('Base dyno type', selected: 'Basic')
     expect(page).to have_select('Boost dyno type', selected: 'Standard-1X')
     expect(page).to have_unchecked_field('Set env variable')

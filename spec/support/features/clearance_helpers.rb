@@ -5,7 +5,7 @@ module Features
     def reset_password_for(email)
       visit new_password_path
       fill_in 'password_email', with: email
-      click_on I18n.t('helpers.submit.password.submit')
+      click_button I18n.t('helpers.submit.password.submit')
     end
 
     def sign_in
@@ -18,11 +18,11 @@ module Features
       visit sign_in_path
       fill_in 'session_email', with: email
       fill_in 'session_password', with: password
-      click_on I18n.t('helpers.submit.session.submit')
+      click_button I18n.t('helpers.submit.session.submit')
     end
 
     def sign_out
-      click_on I18n.t('layouts.application.sign_out')
+      click_link I18n.t('layouts.application.sign_out')
     end
 
     def sign_up_with(email, password, organisation_name)
@@ -30,7 +30,7 @@ module Features
       fill_in 'new_user_form_email', with: email
       fill_in 'new_user_form_password', with: password
       fill_in 'new_user_form_organisation_name', with: organisation_name
-      click_on I18n.t('helpers.submit.user.create')
+      click_button I18n.t('helpers.submit.user.create')
     end
 
     def expect_user_to_be_signed_in
