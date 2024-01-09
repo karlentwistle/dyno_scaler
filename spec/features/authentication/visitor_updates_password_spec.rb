@@ -44,6 +44,6 @@ RSpec.describe 'Visitor updates password' do
 
   def change_password_to(password)
     fill_in 'password_reset_password', with: password
-    click_button I18n.t('helpers.submit.password_reset.submit')
+    click_on I18n.t('helpers.submit.password_reset.submit')
   end
 end
