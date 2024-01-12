@@ -138,7 +138,7 @@ GEM
     erubis (2.7.0)
     et-orbi (1.2.7)
       tzinfo
-    excon (0.99.0)
+    excon (0.109.0)
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -251,7 +251,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.4)
-    platform-api (3.5.0)
+    platform-api (3.6.0)
       heroics (~> 0.1.1)
       moneta (~> 1.0.0)
       rate_throttle_client (~> 0.1.0)
