@@ -57,7 +57,7 @@ gem 'sidekiq-cron'
 gem 'platform-api'
 
 # Tailwind CSS for Rails
-gem 'tailwindcss-rails', '~> 2.6'
+gem 'tailwindcss-rails', '~> 3.0'
 
 # ActiveHash is a simple base class that allows you to use a ruby hash as a readonly datasource
 gem 'active_hash'
