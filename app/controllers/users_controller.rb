@@ -33,6 +33,6 @@ class UsersController < Clearance::BaseController
   end
 
   def form_params
-    params.require(:new_user_form).permit(:email, :password, :organisation_name)
+    params.expect(new_user_form: %i[email password organisation_name])
   end
 end

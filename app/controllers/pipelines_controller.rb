@@ -63,7 +63,7 @@ class PipelinesController < ApplicationController
   private
 
   def create_pipeline_params
-    params.require(:pipeline).permit(:uuid, :api_key, :base_size_id, :boost_size_id, :set_env)
+    params.expect(pipeline: %i[uuid api_key base_size_id boost_size_id set_env])
   end
 
   def update_pipeline_params
