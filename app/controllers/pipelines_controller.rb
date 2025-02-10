@@ -63,11 +63,11 @@ class PipelinesController < ApplicationController
   private
 
   def create_pipeline_params
-    params.require(:pipeline).permit(:uuid, :api_key, :base_size_id, :boost_size_id, :set_env)
+    params.expect(pipeline: %i[name uuid api_key base_size_id boost_size_id set_env])
   end
 
   def update_pipeline_params
-    create_pipeline_params.slice(:api_key, :base_size_id, :boost_size_id, :set_env)
+    create_pipeline_params.slice(:name, :api_key, :base_size_id, :boost_size_id, :set_env)
   end
 
   def ensure_user_is_a_manager_of_organization
