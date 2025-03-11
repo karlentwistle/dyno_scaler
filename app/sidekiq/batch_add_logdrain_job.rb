@@ -8,7 +8,7 @@ class BatchAddLogdrainJob
   def perform
     Pipeline.in_batches do |pipeline_batch|
       AddLogdrainJob.perform_bulk(
-        pipeline_batch.pluck(:id).map { |x| [x] }
+        pipeline_batch.pluck(:id).zip
       )
     end
   end
