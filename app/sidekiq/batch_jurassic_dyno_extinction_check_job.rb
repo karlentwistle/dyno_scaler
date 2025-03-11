@@ -8,7 +8,7 @@ class BatchJurassicDynoExtinctionCheckJob
   def perform
     ReviewApp.potentially_extinct.in_batches do |review_app_batch|
       JurassicDynoExtinctionCheckJob.perform_bulk(
-        review_app_batch.pluck(:id).map { |x| [x] }
+        review_app_batch.pluck(:id).zip
       )
     end
   end

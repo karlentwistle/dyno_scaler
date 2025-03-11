@@ -8,7 +8,7 @@ class BatchFormationUpdateJob
   def perform
     ReviewApp.awaiting_update.in_batches do |review_app_batch|
       FormationUpdateJob.perform_bulk(
-        review_app_batch.pluck(:id).map { |x| [x] }
+        review_app_batch.pluck(:id).zip
       )
     end
   end
